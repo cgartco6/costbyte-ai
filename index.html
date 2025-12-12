@@ -1,0 +1,2874 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CostByte | Get Employed - AI Job Application System</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+    
+    <!-- AI-Powered CSS with Integrated Styles -->
+    <style id="ai-styles">
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --border: #e5e7eb;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Main Container */
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Header */
+        .header {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .logo-slogan {
+            font-size: 0.8rem;
+            color: var(--dark);
+            opacity: 0.7;
+            margin-left: 0.5rem;
+        }
+        
+        .badges {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .badge {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            background: var(--light);
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+        }
+        
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--dark);
+            opacity: 0.7;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .tab-btn:hover {
+            opacity: 1;
+            background: rgba(37, 99, 235, 0.05);
+        }
+        
+        .tab-btn.active {
+            opacity: 1;
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+            background: rgba(37, 99, 235, 0.1);
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+            min-height: calc(100vh - 200px);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .card-subtitle {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+        }
+        
+        .form-text {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 0.25rem;
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--dark);
+        }
+        
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+        
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+        }
+        
+        /* File Upload */
+        .file-upload {
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+        }
+        
+        .file-upload.dragover {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .file-list {
+            margin-top: 1rem;
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem;
+            background: var(--light);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Progress Bar */
+        .progress {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+        
+        /* Alerts */
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid;
+        }
+        
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border-left-color: var(--success);
+            color: #065f46;
+        }
+        
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-left-color: var(--warning);
+            color: #92400e;
+        }
+        
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.1);
+            border-left-color: var(--danger);
+            color: #991b1b;
+        }
+        
+        .alert-info {
+            background: rgba(37, 99, 235, 0.1);
+            border-left-color: var(--primary);
+            color: #1e40af;
+        }
+        
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th {
+            background: var(--light);
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+        }
+        
+        .table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .table tr:hover {
+            background: rgba(37, 99, 235, 0.05);
+        }
+        
+        /* Dashboard Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0.5rem 0;
+        }
+        
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        
+        /* Charts */
+        .chart-container {
+            height: 300px;
+            margin: 2rem 0;
+        }
+        
+        /* Payment Methods */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .payment-method {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .payment-method:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.1);
+        }
+        
+        /* WhatsApp Chat */
+        .whatsapp-chat {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+        
+        .whatsapp-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #25D366;
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s;
+        }
+        
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(37, 211, 102, 0.6);
+        }
+        
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalIn 0.3s ease;
+        }
+        
+        @keyframes modalIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: right;
+        }
+        
+        /* Loader */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* AI Processing Animation */
+        .ai-processing {
+            text-align: center;
+            padding: 3rem;
+        }
+        
+        .ai-bot {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1rem 0;
+        }
+        
+        .footer-link {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .badges {
+                justify-content: center;
+            }
+            
+            .nav-tabs {
+                justify-content: flex-start;
+            }
+            
+            .tab-btn {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    
+    <!-- Integrated AI JavaScript Libraries -->
+    <script>
+        // AI Core System - Self-Contained Backend Simulation
+        class CostByteAISystem {
+            constructor() {
+                this.users = JSON.parse(localStorage.getItem('costbyte_users') || '{}');
+                this.payments = JSON.parse(localStorage.getItem('costbyte_payments') || '[]');
+                this.documents = JSON.parse(localStorage.getItem('costbyte_documents') || '[]');
+                this.jobs = JSON.parse(localStorage.getItem('costbyte_jobs') || '[]');
+                this.applications = JSON.parse(localStorage.getItem('costbyte_applications') || '[]');
+                this.ownerData = JSON.parse(localStorage.getItem('costbyte_owner') || '{}');
+                this.currentUser = JSON.parse(localStorage.getItem('costbyte_current_user') || 'null');
+                this.isOwner = JSON.parse(localStorage.getItem('costbyte_is_owner') || 'false');
+                
+                // Initialize AI models
+                this.aiModels = {
+                    cvEnhancer: null,
+                    jobMatcher: null,
+                    autoApplier: null,
+                    contentCreator: null
+                };
+                
+                this.initAI();
+            }
+            
+            initAI() {
+                console.log('🤖 AI System Initializing...');
+                
+                // CV Enhancement AI
+                this.aiModels.cvEnhancer = {
+                    enhance: async (cvText, userData) => {
+                        return new Promise(resolve => {
+                            setTimeout(() => {
+                                const enhanced = this.enhanceCVWithAI(cvText, userData);
+                                resolve(enhanced);
+                            }, 2000);
+                        });
+                    }
+                };
+                
+                // Job Matching AI
+                this.aiModels.jobMatcher = {
+                    findMatches: async (userData, jobs) => {
+                        return new Promise(resolve => {
+                            setTimeout(() => {
+                                const matches = this.matchJobsWithAI(userData, jobs);
+                                resolve(matches);
+                            }, 1500);
+                        });
+                    }
+                };
+                
+                // Content Creation AI
+                this.aiModels.contentCreator = {
+                    generateContent: async (type, data) => {
+                        return new Promise(resolve => {
+                            setTimeout(() => {
+                                const content = this.generateAIContent(type, data);
+                                resolve(content);
+                            }, 1000);
+                        });
+                    }
+                };
+                
+                console.log('✅ AI System Ready');
+            }
+            
+            // User Management
+            registerUser(userData) {
+                const userId = 'user_' + Date.now();
+                const user = {
+                    id: userId,
+                    ...userData,
+                    isVerified: this.verifySAID(userData.saId),
+                    hasPaid: false,
+                    registeredAt: new Date().toISOString(),
+                    totalApplications: 0,
+                    successfulApplications: 0
+                };
+                
+                this.users[userId] = user;
+                localStorage.setItem('costbyte_users', JSON.stringify(this.users));
+                return { success: true, user, message: 'Registration successful!' };
+            }
+            
+            login(email, password) {
+                const user = Object.values(this.users).find(u => u.email === email);
+                
+                if (!user) {
+                    return { success: false, message: 'User not found' };
+                }
+                
+                if (user.password !== password) {
+                    return { success: false, message: 'Invalid password' };
+                }
+                
+                this.currentUser = user;
+                this.isOwner = email === 'owner@costbyte.co.za';
+                localStorage.setItem('costbyte_current_user', JSON.stringify(user));
+                localStorage.setItem('costbyte_is_owner', JSON.stringify(this.isOwner));
+                
+                return { success: true, user, isOwner: this.isOwner };
+            }
+            
+            logout() {
+                this.currentUser = null;
+                this.isOwner = false;
+                localStorage.removeItem('costbyte_current_user');
+                localStorage.removeItem('costbyte_is_owner');
+            }
+            
+            // South African ID Verification
+            verifySAID(idNumber) {
+                if (!idNumber || idNumber.length !== 13) return false;
+                if (!/^\d{13}$/.test(idNumber)) return false;
+                
+                // Luhn Algorithm for SA ID
+                let total = 0;
+                for (let i = 0; i < 12; i++) {
+                    let digit = parseInt(idNumber[i]);
+                    if (i % 2 === 0) {
+                        digit *= 2;
+                        if (digit > 9) digit -= 9;
+                    }
+                    total += digit;
+                }
+                
+                const checkDigit = (10 - (total % 10)) % 10;
+                return checkDigit === parseInt(idNumber[12]);
+            }
+            
+            // Payment Processing
+            processPayment(userId, amount, method, details) {
+                const paymentId = 'pay_' + Date.now();
+                const payment = {
+                    id: paymentId,
+                    userId,
+                    amount,
+                    method,
+                    details,
+                    status: 'completed',
+                    timestamp: new Date().toISOString(),
+                    reference: 'COSTBYTE-' + Date.now()
+                };
+                
+                this.payments.push(payment);
+                localStorage.setItem('costbyte_payments', JSON.stringify(this.payments));
+                
+                // Update user payment status
+                if (this.users[userId]) {
+                    this.users[userId].hasPaid = true;
+                    this.users[userId].paymentDate = new Date().toISOString();
+                    localStorage.setItem('costbyte_users', JSON.stringify(this.users));
+                }
+                
+                return { success: true, payment };
+            }
+            
+            // Document Processing
+            uploadDocument(userId, type, fileData) {
+                const docId = 'doc_' + Date.now();
+                const document = {
+                    id: docId,
+                    userId,
+                    type,
+                    fileData,
+                    uploadedAt: new Date().toISOString(),
+                    status: 'uploaded'
+                };
+                
+                this.documents.push(document);
+                localStorage.setItem('costbyte_documents', JSON.stringify(this.documents));
+                return { success: true, document };
+            }
+            
+            processCV(cvText, userId) {
+                return new Promise(async (resolve) => {
+                    const user = this.users[userId];
+                    const enhancedCV = await this.aiModels.cvEnhancer.enhance(cvText, user);
+                    
+                    // Calculate savings
+                    const savings = this.calculateSavings(user);
+                    
+                    resolve({
+                        success: true,
+                        enhancedCV,
+                        coverLetter: this.generateCoverLetter(user),
+                        savings,
+                        downloadUrl: this.generatePDF(enhancedCV, user)
+                    });
+                });
+            }
+            
+            // AI CV Enhancement
+            enhanceCVWithAI(originalCV, userData) {
+                const templates = [
+                    `PROFESSIONAL PROFILE
+A results-driven ${userData.currentOccupation || 'professional'} with ${userData.yearsExperience || 3}+ years of experience in the South African market. Skilled in ${userData.skills?.join(', ') || 'various industries'} with a proven track record of success.`,
+                    
+                    `KEY SKILLS
+• ${userData.skills?.slice(0, 5).join('\n• ') || 'Professional communication, Problem-solving, Team collaboration'}
+• South African market expertise
+• Digital literacy and adaptability`,
+                    
+                    `PROFESSIONAL EXPERIENCE
+${userData.currentOccupation || 'Current Position'} | ${new Date().getFullYear() - (userData.yearsExperience || 3)} - Present
+• Achieved significant results through dedicated work
+• Implemented improvements that increased efficiency
+• Collaborated with teams to achieve business objectives`,
+                    
+                    `EDUCATION
+${userData.highestQualification || 'Relevant Qualification'} | Completed ${new Date().getFullYear() - 2}
+• Relevant coursework and projects
+• Developed practical skills for the workplace`,
+                    
+                    `ACHIEVEMENTS
+• Successfully completed multiple projects
+• Recognized for dedication and hard work
+• Contributed to team success in various roles`
+                ];
+                
+                return templates.join('\n\n') + '\n\n' + originalCV;
+            }
+            
+            // Job Search and Matching
+            async searchJobs(userData) {
+                // Simulate job scraping
+                const jobs = this.scrapeJobs(userData);
+                const matches = await this.aiModels.jobMatcher.findMatches(userData, jobs);
+                
+                return {
+                    success: true,
+                    totalJobs: jobs.length,
+                    matchedJobs: matches.length,
+                    jobs: matches
+                };
+            }
+            
+            scrapeJobs(userData) {
+                const jobTitles = [
+                    'Software Developer', 'Marketing Manager', 'Sales Representative',
+                    'Accountant', 'Project Manager', 'Data Analyst', 'Customer Service',
+                    'HR Manager', 'Operations Manager', 'Business Analyst'
+                ];
+                
+                const companies = [
+                    'MTN South Africa', 'Vodacom', 'Standard Bank', 'Nedbank',
+                    'Absa', 'Shoprite', 'Pick n Pay', 'Sasol', 'Exxaro', 'Transnet'
+                ];
+                
+                const locations = ['Johannesburg', 'Cape Town', 'Durban', 'Pretoria', 'Port Elizabeth'];
+                
+                const jobs = [];
+                for (let i = 0; i < 20; i++) {
+                    jobs.push({
+                        id: 'job_' + i,
+                        title: jobTitles[Math.floor(Math.random() * jobTitles.length)],
+                        company: companies[Math.floor(Math.random() * companies.length)],
+                        location: locations[Math.floor(Math.random() * locations.length)],
+                        salary: Math.floor(Math.random() * 50000) + 30000,
+                        type: ['Full-time', 'Part-time', 'Contract'][Math.floor(Math.random() * 3)],
+                        postedDate: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString(),
+                        matchScore: Math.floor(Math.random() * 30) + 70,
+                        applyUrl: 'https://careers24.com/job/' + i
+                    });
+                }
+                
+                this.jobs = jobs;
+                localStorage.setItem('costbyte_jobs', JSON.stringify(jobs));
+                return jobs;
+            }
+            
+            matchJobsWithAI(userData, jobs) {
+                return jobs.map(job => {
+                    let score = job.matchScore;
+                    
+                    // Boost score based on user preferences
+                    if (userData.preferredLocations?.includes(job.location)) {
+                        score += 10;
+                    }
+                    
+                    if (userData.preferredIndustries?.some(ind => 
+                        job.title.toLowerCase().includes(ind.toLowerCase()))) {
+                        score += 15;
+                    }
+                    
+                    if (userData.salaryExpectation && job.salary >= userData.salaryExpectation) {
+                        score += 5;
+                    }
+                    
+                    return { ...job, matchScore: Math.min(score, 100) };
+                }).sort((a, b) => b.matchScore - a.matchScore);
+            }
+            
+            // Auto Application System
+            async autoApply(userId, jobIds) {
+                const applications = [];
+                
+                for (const jobId of jobIds.slice(0, 5)) {
+                    const job = this.jobs.find(j => j.id === jobId);
+                    if (!job) continue;
+                    
+                    const application = {
+                        id: 'app_' + Date.now() + '_' + jobId,
+                        userId,
+                        jobId,
+                        jobTitle: job.title,
+                        company: job.company,
+                        appliedAt: new Date().toISOString(),
+                        status: 'applied',
+                        matchScore: job.matchScore
+                    };
+                    
+                    this.applications.push(application);
+                    applications.push(application);
+                    
+                    // Update user stats
+                    if (this.users[userId]) {
+                        this.users[userId].totalApplications++;
+                        this.users[userId].successfulApplications++;
+                    }
+                }
+                
+                localStorage.setItem('costbyte_applications', JSON.stringify(this.applications));
+                localStorage.setItem('costbyte_users', JSON.stringify(this.users));
+                
+                return { success: true, applications };
+            }
+            
+            // Owner Dashboard Analytics
+            getOwnerAnalytics() {
+                const totalUsers = Object.keys(this.users).length;
+                const paidUsers = Object.values(this.users).filter(u => u.hasPaid).length;
+                const totalRevenue = this.payments.reduce((sum, p) => sum + p.amount, 0);
+                const totalApplications = this.applications.length;
+                
+                // Revenue distribution
+                const distribution = {
+                    owner: totalRevenue * 0.35,
+                    aiDevelopment: totalRevenue * 0.20,
+                    reserve: totalRevenue * 0.20,
+                    africanBank: totalRevenue * 0.15,
+                    growth: totalRevenue * 0.10
+                };
+                
+                // Weekly growth
+                const weeklyGrowth = {
+                    users: Math.floor(totalUsers * 0.15),
+                    revenue: Math.floor(totalRevenue * 0.20),
+                    applications: Math.floor(totalApplications * 0.25)
+                };
+                
+                return {
+                    totalUsers,
+                    paidUsers,
+                    totalRevenue,
+                    totalApplications,
+                    distribution,
+                    weeklyGrowth,
+                    recentPayments: this.payments.slice(-10).reverse(),
+                    recentApplications: this.applications.slice(-10).reverse()
+                };
+            }
+            
+            // Marketing Content Generation
+            generateAIContent(type, data) {
+                const templates = {
+                    socialPost: [
+                        "🚀 Just landed my dream job with CostByte AI!",
+                        "🤖 AI found me 10 perfect job matches today!",
+                        "💰 Saved R2000+ with CostByte's automated applications!",
+                        "📄 Got my professional CV in minutes!",
+                        "🇿🇦 Proudly helping South Africans find work!"
+                    ],
+                    email: [
+                        "Subject: Your AI-Enhanced CV is Ready!\n\nDear [Name],\nYour professional CV is ready for download...",
+                        "Subject: New Job Matches Found!\n\nWe found 5 new jobs matching your profile..."
+                    ],
+                    whatsapp: [
+                        "🎯 *New Job Alert!*\nPosition: [Job Title]\nCompany: [Company]\nMatch: 92%\nApply now!",
+                        "✅ *Application Submitted!*\nYou've successfully applied for [Job Title] at [Company]"
+                    ]
+                };
+                
+                return templates[type]?.[Math.floor(Math.random() * templates[type].length)] || 'AI-generated content';
+            }
+            
+            // Helper Methods
+            calculateSavings(userData) {
+                const traditionalCosts = {
+                    cvWriting: 800,
+                    coverLetters: 300,
+                    jobSearchTime: 2000,
+                    careerCoaching: 1500
+                };
+                
+                const totalTraditional = Object.values(traditionalCosts).reduce((a, b) => a + b, 0);
+                const costbyteValue = totalTraditional * 1.5;
+                const savings = costbyteValue - 500;
+                
+                return {
+                    traditionalCost: totalTraditional,
+                    costbyteValue,
+                    savings,
+                    roi: (savings / 500) * 100
+                };
+            }
+            
+            generateCoverLetter(userData) {
+                return `Dear Hiring Manager,
+
+I am writing to express my interest in the position at your company. With ${userData.yearsExperience || 3}+ years of experience as a ${userData.currentOccupation || 'professional'}, I have developed strong skills in ${userData.skills?.slice(0, 3).join(', ') || 'my field'}.
+
+My background includes successful work in the South African market, and I am confident that I can contribute effectively to your team.
+
+Thank you for considering my application. I look forward to discussing how I can add value to your organization.
+
+Sincerely,
+${userData.firstName || ''} ${userData.lastName || ''}`;
+            }
+            
+            generatePDF(content, userData) {
+                // Simulate PDF generation
+                const blob = new Blob([content], { type: 'application/pdf' });
+                return URL.createObjectURL(blob);
+            }
+            
+            // WhatsApp Integration Simulation
+            sendWhatsAppMessage(phone, message) {
+                console.log(`📱 WhatsApp to ${phone}: ${message}`);
+                // In production, integrate with WhatsApp Business API
+                return { success: true, messageId: 'wa_' + Date.now() };
+            }
+            
+            // System Self-Update
+            selfUpdate() {
+                console.log('🔄 AI System Self-Updating...');
+                // Simulate AI learning and improvement
+                this.aiModels.cvEnhancer.enhance = async (cvText, userData) => {
+                    // Improved enhancement logic
+                    return this.enhanceCVWithAI(cvText, userData) + '\n\n[Enhanced by AI v2.0]';
+                };
+                
+                console.log('✅ AI System Updated to v2.0');
+            }
+        }
+        
+        // Global AI System Instance
+        window.CostByteAI = new CostByteAISystem();
+    </script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">🤖</div>
+                <div>
+                    <div class="logo-text">CostByte</div>
+                    <div class="logo-slogan">get employed</div>
+                </div>
+            </div>
+            <div class="badges">
+                <span class="badge">AI-Powered</span>
+                <span class="badge">SA Citizens Only</span>
+                <span class="badge">R500 Once-off</span>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs" id="mainTabs">
+            <button class="tab-btn active" data-tab="home">🏠 Home</button>
+            <button class="tab-btn" data-tab="register">📝 Register</button>
+            <button class="tab-btn" data-tab="payment">💳 Payment</button>
+            <button class="tab-btn" data-tab="documents">📄 Documents</button>
+            <button class="tab-btn" data-tab="jobs">🔍 Jobs</button>
+            <button class="tab-btn" data-tab="dashboard">📊 Dashboard</button>
+            <button class="tab-btn" data-tab="owner" id="ownerTab" style="display: none;">👑 Owner</button>
+            <button class="tab-btn" id="logoutBtn" style="margin-left: auto; color: var(--danger);">🚪 Logout</button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            
+            <!-- Home Tab -->
+            <div class="tab-content active" id="homeTab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">🚀 Welcome to CostByte</h2>
+                    </div>
+                    <div style="text-align: center; padding: 3rem 1rem;">
+                        <div class="ai-bot">🤖</div>
+                        <h1 style="font-size: 2.5rem; margin-bottom: 1rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                            Get Employed with AI
+                        </h1>
+                        <p class="card-subtitle" style="font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem;">
+                            South Africa's first AI-powered job application system. Pay R500 once, get your enhanced CV immediately, and let AI find and apply for jobs for you.
+                        </p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 3rem 0;">
+                            <div class="stat-card">
+                                <div class="stat-value">R500</div>
+                                <div class="stat-label">Once-off Fee</div>
+                                <p style="margin-top: 1rem; font-size: 0.9rem;">No subscriptions, no hidden costs</p>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">🤖</div>
+                                <div class="stat-label">AI-Powered</div>
+                                <p style="margin-top: 1rem; font-size: 0.9rem;">Automated job applications 2x daily</p>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">🇿🇦</div>
+                                <div class="stat-label">SA Citizens Only</div>
+                                <p style="margin-top: 1rem; font-size: 0.9rem;">Verified South African ID required</p>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-lg" onclick="showTab('register')">
+                            Start Your Journey →
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 style="margin-bottom: 1.5rem;">✨ How It Works</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div>
+                            <h4>1. Register & Verify</h4>
+                            <p>Create account with SA ID verification</p>
+                        </div>
+                        <div>
+                            <h4>2. Pay R500</h4>
+                            <p>Once-off fee via FNB, PayFast, etc.</p>
+                        </div>
+                        <div>
+                            <h4>3. Upload Documents</h4>
+                            <p>CV, photo, qualifications</p>
+                        </div>
+                        <div>
+                            <h4>4. Get Enhanced CV</h4>
+                            <p>AI rewrites and optimizes your CV</p>
+                        </div>
+                        <div>
+                            <h4>5. AI Finds Jobs</h4>
+                            <p>Scrapes web 2x daily for matches</p>
+                        </div>
+                        <div>
+                            <h4>6. Auto Apply</h4>
+                            <p>AI applies on your behalf</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 style="margin-bottom: 1.5rem;">💰 Savings Calculator</h3>
+                    <div id="savingsCalculator">
+                        <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 1.5rem;">
+                            <div>
+                                <label style="font-weight: 600;">Years Experience:</label>
+                                <input type="range" id="expRange" min="0" max="20" value="3" style="width: 200px;">
+                                <span id="expValue">3 years</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="calculateSavings()">Calculate Savings</button>
+                        </div>
+                        <div id="savingsResult" style="display: none;">
+                            <div class="alert alert-success">
+                                <h4>💰 You Save: R<span id="savingsAmount">0</span></h4>
+                                <p>Traditional job search costs: R<span id="traditionalCost">0</span></p>
+                                <p>CostByte value: R<span id="costbyteValue">0</span></p>
+                                <p>ROI: <span id="roiPercent">0</span>%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Register Tab -->
+            <div class="tab-content" id="registerTab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📝 Register - South Africans Only</h2>
+                    </div>
+                    <form id="registerForm">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="form-group">
+                                <label class="form-label">First Name *</label>
+                                <input type="text" class="form-control" id="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Last Name *</label>
+                                <input type="text" class="form-control" id="lastName" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">South African ID Number *</label>
+                            <input type="text" class="form-control" id="saId" 
+                                   pattern="\d{13}" 
+                                   title="13-digit South African ID number"
+                                   required>
+                            <div class="form-text">13 digits only. We verify your SA citizenship.</div>
+                            <div id="idVerification" style="margin-top: 0.5rem;"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Email Address *</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Phone Number *</label>
+                            <input type="tel" class="form-control" id="phone" 
+                                   pattern="^(\+27|0)[1-9][0-9]{8}$"
+                                   title="South African phone number"
+                                   required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">WhatsApp Number (for updates)</label>
+                            <input type="tel" class="form-control" id="whatsapp">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Current Occupation</label>
+                            <input type="text" class="form-control" id="occupation">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Years of Experience</label>
+                            <select class="form-select" id="yearsExperience">
+                                <option value="0">0-1 years</option>
+                                <option value="2" selected>2-3 years</option>
+                                <option value="4">4-5 years</option>
+                                <option value="6">6-10 years</option>
+                                <option value="11">10+ years</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Highest Qualification</label>
+                            <select class="form-select" id="qualification">
+                                <option value="">Select</option>
+                                <option value="Matric">Matric / Grade 12</option>
+                                <option value="Diploma">Diploma</option>
+                                <option value="Bachelor">Bachelor's Degree</option>
+                                <option value="Honours">Honours Degree</option>
+                                <option value="Masters">Master's Degree</option>
+                                <option value="PhD">PhD / Doctorate</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Skills (comma separated)</label>
+                            <textarea class="form-control" id="skills" rows="3" 
+                                      placeholder="e.g., Project Management, JavaScript, Customer Service"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Preferred Locations</label>
+                            <select class="form-select" id="locations" multiple>
+                                <option value="Johannesburg">Johannesburg</option>
+                                <option value="Cape Town">Cape Town</option>
+                                <option value="Durban">Durban</option>
+                                <option value="Pretoria">Pretoria</option>
+                                <option value="Port Elizabeth">Port Elizabeth</option>
+                                <option value="Remote">Remote</option>
+                            </select>
+                            <div class="form-text">Hold Ctrl to select multiple</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Salary Expectation (per annum)</label>
+                            <select class="form-select" id="salary">
+                                <option value="150000">R150,000 - R250,000</option>
+                                <option value="300000" selected>R250,000 - R350,000</option>
+                                <option value="450000">R350,000 - R500,000</option>
+                                <option value="600000">R500,000 - R750,000</option>
+                                <option value="850000">R750,000+</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Password *</label>
+                            <input type="password" class="form-control" id="password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Confirm Password *</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                <input type="checkbox" id="terms" required>
+                                I accept the Terms & Conditions and confirm I am a South African citizen
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            Register & Continue to Payment
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="alert alert-info">
+                    <strong>🇿🇦 South African Citizens Only</strong>
+                    <p>This service is exclusively for South African citizens. We verify all ID numbers and reserve the right to refuse service to anyone unable to prove South African citizenship.</p>
+                </div>
+            </div>
+
+            <!-- Payment Tab -->
+            <div class="tab-content" id="paymentTab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">💳 Payment - R500 Once-off Fee</h2>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary);">
+                            R500.00
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-success" style="margin-bottom: 1.5rem;">
+                        <strong>🎉 Registration Successful!</strong>
+                        <p>Your South African ID has been verified. Proceed with payment to activate AI job hunting.</p>
+                    </div>
+                    
+                    <div class="payment-methods">
+                        <div class="payment-method" data-method="fnb_eft" onclick="selectPaymentMethod('fnb_eft')">
+                            <div style="font-size: 2rem;">🏦</div>
+                            <h4>FNB Direct EFT</h4>
+                            <p>Bank transfer to FNB account</p>
+                        </div>
+                        
+                        <div class="payment-method" data-method="payfast" onclick="selectPaymentMethod('payfast')">
+                            <div style="font-size: 2rem;">💳</div>
+                            <h4>PayFast</h4>
+                            <p>Credit/Debit Card</p>
+                        </div>
+                        
+                        <div class="payment-method" data-method="payshap" onclick="selectPaymentMethod('payshap')">
+                            <div style="font-size: 2rem;">⚡</div>
+                            <h4>PayShap</h4>
+                            <p>Instant EFT</p>
+                        </div>
+                        
+                        <div class="payment-method" data-method="paystack" onclick="selectPaymentMethod('paystack')">
+                            <div style="font-size: 2rem;">🔄</div>
+                            <h4>PayStack</h4>
+                            <p>Multiple payment options</p>
+                        </div>
+                    </div>
+                    
+                    <div id="paymentDetails" style="display: none; margin-top: 2rem;">
+                        <div class="card" id="fnbDetails" style="display: none;">
+                            <h3>FNB Banking Details</h3>
+                            <div style="background: var(--light); padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                                <div style="display: grid; grid-template-columns: 150px 1fr; gap: 0.5rem; margin-bottom: 1rem;">
+                                    <strong>Bank:</strong> First National Bank
+                                    <strong>Account Name:</strong> CostByte (Pty) Ltd
+                                    <strong>Account Number:</strong> 6278 4567 8901
+                                    <strong>Branch Code:</strong> 250655
+                                    <strong>Reference:</strong> <span id="paymentRef">COSTBYTE-123456</span>
+                                    <strong>Amount:</strong> R500.00
+                                </div>
+                                <p style="color: var(--warning); margin-top: 1rem;">
+                                    ⚠️ Use exact reference when paying. Allow 2-3 hours for processing.
+                                </p>
+                            </div>
+                            <button class="btn btn-primary" onclick="simulateFNBpayment()">
+                                I've Made Payment
+                            </button>
+                        </div>
+                        
+                        <div id="otherPayment" style="display: none;">
+                            <p>Redirecting to secure payment gateway...</p>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 0%;" id="paymentProgress"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+                        <h4>📄 What You Get for R500:</h4>
+                        <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                            <li>Immediate AI-enhanced CV download</li>
+                            <li>AI-powered cover letter generator</li>
+                            <li>Automated job search (2x daily)</li>
+                            <li>Auto-application to matched jobs</li>
+                            <li>WhatsApp notifications for updates</li>
+                            <li>Personal job application dashboard</li>
+                            <li>Lifetime service - no expiry</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents Tab -->
+            <div class="tab-content" id="documentsTab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📄 Upload Documents</h2>
+                        <span class="badge" style="background: var(--success);">Payment Verified ✓</span>
+                    </div>
+                    
+                    <div class="alert alert-success">
+                        <strong>✅ Payment Confirmed!</strong>
+                        <p>Your R500 payment has been processed. Upload your documents to get started.</p>
+                    </div>
+                    
+                    <!-- CV Upload -->
+                    <div class="form-group">
+                        <label class="form-label">1. Upload Your CV (PDF/DOC/DOCX)</label>
+                        <div class="file-upload" id="cvUpload" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'cv')">
+                            <div style="font-size: 3rem;">📄</div>
+                            <p>Drag & drop your CV here</p>
+                            <p class="form-text">or click to browse (Max 10MB)</p>
+                            <input type="file" id="cvFile" accept=".pdf,.doc,.docx" style="display: none;" onchange="handleFileSelect(this, 'cv')">
+                            <button class="btn btn-outline" onclick="document.getElementById('cvFile').click()">
+                                Browse Files
+                            </button>
+                        </div>
+                        <div class="file-list" id="cvList"></div>
+                    </div>
+                    
+                    <!-- Photo Upload -->
+                    <div class="form-group">
+                        <label class="form-label">2. Upload Head & Shoulders Photo (JPG/PNG)</label>
+                        <div class="file-upload" id="photoUpload" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'photo')">
+                            <div style="font-size: 3rem;">📸</div>
+                            <p>Drag & drop your photo here</p>
+                            <p class="form-text">Professional headshot preferred (Max 5MB)</p>
+                            <input type="file" id="photoFile" accept=".jpg,.jpeg,.png" style="display: none;" onchange="handleFileSelect(this, 'photo')">
+                            <button class="btn btn-outline" onclick="document.getElementById('photoFile').click()">
+                                Browse Files
+                            </button>
+                        </div>
+                        <div class="file-list" id="photoList"></div>
+                    </div>
+                    
+                    <!-- Qualifications Upload -->
+                    <div class="form-group">
+                        <label class="form-label">3. Upload Qualifications (PDF/Images)</label>
+                        <div class="file-upload" id="qualUpload" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'qualifications')">
+                            <div style="font-size: 3rem;">🎓</div>
+                            <p>Drag & drop qualification documents</p>
+                            <p class="form-text">Certificates, diplomas, degrees (Max 10MB each)</p>
+                            <input type="file" id="qualFile" accept=".pdf,.jpg,.jpeg,.png" multiple style="display: none;" onchange="handleFileSelect(this, 'qualifications')">
+                            <button class="btn btn-outline" onclick="document.getElementById('qualFile').click()">
+                                Browse Files
+                            </button>
+                        </div>
+                        <div class="file-list" id="qualList"></div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn btn-primary btn-lg" onclick="processDocuments()" id="processBtn">
+                            🤖 Process Documents with AI
+                        </button>
+                    </div>
+                    
+                    <!-- AI Processing -->
+                    <div id="aiProcessing" style="display: none; margin-top: 2rem;">
+                        <div class="ai-processing">
+                            <div class="ai-bot">🤖</div>
+                            <h3>AI Processing Your Documents</h3>
+                            <p>Our AI is enhancing your CV and creating your professional profile...</p>
+                            <div class="progress" style="max-width: 500px; margin: 2rem auto;">
+                                <div class="progress-bar" id="aiProgressBar" style="width: 0%;"></div>
+                            </div>
+                            <div id="aiStatus">Initializing AI...</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Results -->
+                    <div id="aiResults" style="display: none; margin-top: 2rem;">
+                        <div class="alert alert-success">
+                            <h3>✅ AI Processing Complete!</h3>
+                            <p>Your professional documents are ready.</p>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                            <div class="card">
+                                <h4>📄 Enhanced CV</h4>
+                                <p>AI-optimized for Applicant Tracking Systems</p>
+                                <button class="btn btn-primary" onclick="downloadCV()">
+                                    Download CV
+                                </button>
+                                <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--success);">
+                                    ✓ ATS optimized ✓ Keyword-rich ✓ Professional format
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <h4>✉️ Cover Letter</h4>
+                                <p>AI-generated professional cover letter</p>
+                                <button class="btn btn-primary" onclick="downloadCoverLetter()">
+                                    Download Cover Letter
+                                </button>
+                                <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--success);">
+                                    ✓ Customized ✓ Professional tone ✓ Ready to use
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <h4>💰 Savings Report</h4>
+                                <p>See how much you save with CostByte</p>
+                                <button class="btn btn-success" onclick="showSavingsReport()">
+                                    View Savings
+                                </button>
+                                <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--success);">
+                                    ✓ R2000+ saved ✓ Time saved ✓ AI advantage
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 2rem;">
+                            <button class="btn btn-primary btn-lg" onclick="showTab('jobs')">
+                                🚀 Start Job Hunting with AI
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jobs Tab -->
+            <div class="tab-content" id="jobsTab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">🔍 AI Job Search</h2>
+                        <button class="btn btn-primary" onclick="startJobSearch()">
+                            🔄 Search for Jobs
+                        </button>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <strong>🤖 AI-Powered Job Search</strong>
+                        <p>Our AI searches Careers24, PNet, Indeed, LinkedIn and more, 2x daily. It matches jobs to your profile automatically.</p>
+                    </div>
+                    
+                    <div id="jobSearchStatus" style="margin-bottom: 1.5rem;"></div>
+                    
+                    <div id="jobsContainer" style="display: none;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3>🎯 Matched Jobs</h3>
+                            <div>
+                                <span id="matchedCount">0</span> matches found
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Position</th>
+                                        <th>Company</th>
+                                        <th>Location</th>
+                                        <th>Salary</th>
+                                        <th>Match</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="jobsTable">
+                                    <!-- Jobs will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div style="margin-top: 1.5rem; text-align: center;">
+                            <button class="btn btn-primary btn-lg" onclick="autoApplyToAll()" id="autoApplyBtn">
+                                🤖 Auto-Apply to All Matches
+                            </button>
+                            <p class="form-text" style="margin-top: 0.5rem;">
+                                AI will automatically apply to all high-match jobs (Max 5 per day)
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div id="autoApplyStatus" style="display: none; margin-top: 2rem;"></div>
+                </div>
+                
+                <div class="card">
+                    <h3>📊 Application History</h3>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Position</th>
+                                    <th>Company</th>
+                                    <th>Status</th>
+                                    <th>Match Score</th>
+                                </tr>
+                            </thead>
+                            <tbody id="applicationsTable">
+                                <!-- Applications will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Dashboard Tab -->
+            <div class="tab-content" id="dashboardTab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📊 Your Dashboard</h2>
+                        <div id="userWelcome">Welcome!</div>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalApps">0</div>
+                            <div class="stat-label">Total Applications</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="successfulApps">0</div>
+                            <div class="stat-label">Successful Applications</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="interviews">0</div>
+                            <div class="stat-label">Interview Invites</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="jobOffers">0</div>
+                            <div class="stat-label">Job Offers</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                        <div>
+                            <h4>📈 Application Trend</h4>
+                            <div class="chart-container">
+                                <canvas id="applicationsChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4>🎯 Match Scores</h4>
+                            <div class="chart-container">
+                                <canvas id="matchScoreChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <h4>🤖 AI Settings</h4>
+                        <div style="background: var(--light); padding: 1.5rem; border-radius: 8px;">
+                            <div class="form-group">
+                                <label class="form-label">Daily Application Limit</label>
+                                <input type="range" min="1" max="20" value="10" class="form-control" id="dailyLimit" onchange="updateAISettings()">
+                                <div class="form-text">
+                                    <span id="limitValue">10</span> applications per day
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Minimum Match Score</label>
+                                <input type="range" min="50" max="95" value="70" class="form-control" id="minMatch" onchange="updateAISettings()">
+                                <div class="form-text">
+                                    Only apply to jobs with <span id="matchValue">70</span>%+ match
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" id="whatsappAlerts" checked>
+                                    Receive WhatsApp alerts for new matches
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <h4>📱 WhatsApp Updates</h4>
+                        <div class="alert alert-info">
+                            <strong>Real-time Updates</strong>
+                            <p>You'll receive WhatsApp messages for:</p>
+                            <ul style="margin: 0.5rem 0 0 1.5rem;">
+                                <li>New job matches</li>
+                                <li>Application confirmations</li>
+                                <li>Interview invitations</li>
+                                <li>Daily summaries</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Owner Dashboard Tab -->
+            <div class="tab-content" id="ownerTab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">👑 Owner Dashboard</h2>
+                        <button class="btn btn-primary" onclick="updateOwnerDashboard()">
+                            🔄 Refresh
+                        </button>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalUsers">0</div>
+                            <div class="stat-label">Total Users</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="paidUsers">0</div>
+                            <div class="stat-label">Paying Users</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">R<span id="totalRevenue">0</span></div>
+                            <div class="stat-label">Total Revenue</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalApplications">0</div>
+                            <div class="stat-label">Total Applications</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                        <div>
+                            <h4>💰 Revenue Distribution</h4>
+                            <div class="chart-container">
+                                <canvas id="revenueChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4>📊 Weekly Growth</h4>
+                            <div style="background: var(--light); padding: 1.5rem; border-radius: 8px;">
+                                <div style="margin-bottom: 1rem;">
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--success);" id="userGrowth">0</div>
+                                    <div class="stat-label">New Users This Week</div>
+                                </div>
+                                <div style="margin-bottom: 1rem;">
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--success);">R<span id="revenueGrowth">0</span></div>
+                                    <div class="stat-label">Revenue Growth</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--success);" id="appGrowth">0</div>
+                                    <div class="stat-label">Application Growth</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <h4>🏦 Bank Distribution</h4>
+                        <div style="background: var(--light); padding: 1.5rem; border-radius: 8px;">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                                <div>
+                                    <strong>FNB Account (Owner):</strong><br>
+                                    R<span id="ownerAmount">0</span> (35%)
+                                </div>
+                                <div>
+                                    <strong>African Bank:</strong><br>
+                                    R<span id="africanAmount">0</span> (15%)
+                                </div>
+                                <div>
+                                    <strong>FNB AI Account:</strong><br>
+                                    R<span id="aiAmount">0</span> (20%)
+                                </div>
+                                <div>
+                                    <strong>FNB Reserve:</strong><br>
+                                    R<span id="reserveAmount">0</span> (20%)
+                                </div>
+                                <div>
+                                    <strong>Growth Account:</strong><br>
+                                    R<span id="growthAmount">0</span> (10%)
+                                </div>
+                            </div>
+                            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+                                <button class="btn btn-success" onclick="processWeeklyPayout()">
+                                    💰 Process Weekly Payout
+                                </button>
+                                <div class="form-text" style="margin-top: 0.5rem;">
+                                    Growth account compounds at 10% weekly
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <h4>🤖 AI System Status</h4>
+                        <div style="background: var(--light); padding: 1.5rem; border-radius: 8px;">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="loader"></div>
+                                <span>AI Self-Improvement: Active</span>
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <strong>AI Version:</strong> 2.1.4
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <strong>Last Update:</strong> Today 09:45
+                            </div>
+                            <button class="btn btn-primary" onclick="aiSelfUpdate()">
+                                🔄 Force AI Update
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <h4>📢 Marketing Automation</h4>
+                        <div style="background: var(--light); padding: 1.5rem; border-radius: 8px;">
+                            <div class="form-group">
+                                <label class="form-label">Target: 5,000 users in 10 days</label>
+                                <div class="progress">
+                                    <div class="progress-bar" id="targetProgress" style="width: 0%;"></div>
+                                </div>
+                                <div class="form-text" id="targetText">0/5,000 users</div>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1rem 0;">
+                                <button class="btn btn-outline" onclick="generateContent('facebook')">
+                                    📘 Facebook Post
+                                </button>
+                                <button class="btn btn-outline" onclick="generateContent('instagram')">
+                                    📷 Instagram Reel
+                                </button>
+                                <button class="btn btn-outline" onclick="generateContent('tiktok')">
+                                    🎵 TikTok Video
+                                </button>
+                                <button class="btn btn-outline" onclick="generateContent('linkedin')">
+                                    💼 LinkedIn Post
+                                </button>
+                            </div>
+                            
+                            <div id="marketingContent" style="margin-top: 1rem;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- WhatsApp Button -->
+        <div class="whatsapp-chat">
+            <button class="whatsapp-btn" onclick="openWhatsApp()">
+                💬
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div>🤖 CostByte - AI Job Application System</div>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Terms & Conditions</a>
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">POPIA Compliance</a>
+                <a href="#" class="footer-link">Contact</a>
+            </div>
+            <div style="margin-top: 1rem; font-size: 0.9rem; color: #9ca3af;">
+                © 2024 CostByte (Pty) Ltd. For South African citizens only.
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🔐 Login</h3>
+                <button onclick="closeModal('loginModal')" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" id="loginEmail" placeholder="admin@costbyte.co.za">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" id="loginPassword" placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 0.5rem;">
+                        <input type="checkbox" id="rememberMe">
+                        Remember me
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="loginUser()">Login</button>
+                <button class="btn btn-outline" onclick="closeModal('loginModal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Integrated JavaScript Application -->
+    <script>
+        // Application State
+        let currentTab = 'home';
+        let selectedPaymentMethod = null;
+        let uploadedFiles = {
+            cv: null,
+            photo: null,
+            qualifications: []
+        };
+        let processedDocuments = null;
+        let selectedJobs = [];
+        
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const currentUser = CostByteAI.currentUser;
+            const isOwner = CostByteAI.isOwner;
+            
+            if (currentUser) {
+                // Show user-specific tabs
+                document.getElementById('dashboardTab').style.display = 'block';
+                if (isOwner) {
+                    document.getElementById('ownerTab').style.display = 'block';
+                    updateOwnerDashboard();
+                }
+                updateUserDashboard();
+            } else {
+                // Show login modal
+                setTimeout(() => {
+                    openModal('loginModal');
+                }, 1000);
+            }
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Auto-check for updates
+            setInterval(() => {
+                CostByteAI.selfUpdate();
+            }, 3600000); // Every hour
+            
+            // Initialize charts
+            initializeCharts();
+        });
+        
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Tab switching
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tab = this.dataset.tab;
+                    if (tab) {
+                        showTab(tab);
+                    }
+                });
+            });
+            
+            // SA ID verification
+            document.getElementById('saId')?.addEventListener('input', function() {
+                verifySAID(this.value);
+            });
+            
+            // Register form
+            document.getElementById('registerForm')?.addEventListener('submit', function(e) {
+                e.preventDefault();
+                registerUser();
+            });
+            
+            // Logout
+            document.getElementById('logoutBtn')?.addEventListener('click', function() {
+                CostByteAI.logout();
+                location.reload();
+            });
+            
+            // File upload click handlers
+            document.getElementById('cvUpload')?.addEventListener('click', function() {
+                document.getElementById('cvFile').click();
+            });
+            
+            document.getElementById('photoUpload')?.addEventListener('click', function() {
+                document.getElementById('photoFile').click();
+            });
+            
+            document.getElementById('qualUpload')?.addEventListener('click', function() {
+                document.getElementById('qualFile').click();
+            });
+        }
+        
+        // Tab Navigation
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + 'Tab')?.classList.add('active');
+            
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.tab === tabName) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            currentTab = tabName;
+            
+            // Load data for specific tabs
+            if (tabName === 'dashboard') {
+                updateUserDashboard();
+            } else if (tabName === 'jobs') {
+                loadApplications();
+            }
+        }
+        
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+        
+        // User Login
+        function loginUser() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const result = CostByteAI.login(email, password);
+            
+            if (result.success) {
+                closeModal('loginModal');
+                showAlert('success', 'Login successful!');
+                
+                // Show appropriate tabs
+                document.getElementById('dashboardTab').style.display = 'block';
+                if (result.isOwner) {
+                    document.getElementById('ownerTab').style.display = 'block';
+                    updateOwnerDashboard();
+                }
+                updateUserDashboard();
+                showTab('dashboard');
+            } else {
+                showAlert('danger', result.message);
+            }
+        }
+        
+        // SA ID Verification
+        function verifySAID(idNumber) {
+            const verificationDiv = document.getElementById('idVerification');
+            
+            if (!idNumber || idNumber.length !== 13) {
+                verificationDiv.innerHTML = '<span style="color: var(--danger);">ID must be 13 digits</span>';
+                return false;
+            }
+            
+            const isValid = CostByteAI.verifySAID(idNumber);
+            
+            if (isValid) {
+                verificationDiv.innerHTML = '<span style="color: var(--success);">✓ Valid South African ID</span>';
+                
+                // Extract demographics
+                const year = idNumber.substring(0, 2);
+                const month = idNumber.substring(2, 4);
+                const day = idNumber.substring(4, 6);
+                const genderDigit = parseInt(idNumber.substring(6, 10));
+                const gender = genderDigit < 5000 ? 'Female' : 'Male';
+                
+                verificationDiv.innerHTML += `<div style="font-size: 0.9rem; margin-top: 0.5rem;">
+                    DOB: ${day}/${month}/19${year} | Gender: ${gender}
+                </div>`;
+                
+                return true;
+            } else {
+                verificationDiv.innerHTML = '<span style="color: var(--danger);">✗ Invalid ID number</span>';
+                return false;
+            }
+        }
+        
+        // User Registration
+        function registerUser() {
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                saId: document.getElementById('saId').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                whatsapp: document.getElementById('whatsapp').value || document.getElementById('phone').value,
+                occupation: document.getElementById('occupation').value,
+                yearsExperience: parseInt(document.getElementById('yearsExperience').value),
+                highestQualification: document.getElementById('qualification').value,
+                skills: document.getElementById('skills').value.split(',').map(s => s.trim()),
+                preferredLocations: Array.from(document.getElementById('locations').selectedOptions).map(o => o.value),
+                salaryExpectation: parseInt(document.getElementById('salary').value),
+                password: document.getElementById('password').value
+            };
+            
+            // Validate passwords
+            if (document.getElementById('password').value !== document.getElementById('confirmPassword').value) {
+                showAlert('danger', 'Passwords do not match!');
+                return;
+            }
+            
+            // Validate SA ID
+            if (!verifySAID(formData.saId)) {
+                showAlert('danger', 'Please enter a valid South African ID number');
+                return;
+            }
+            
+            // Register user
+            const result = CostByteAI.registerUser(formData);
+            
+            if (result.success) {
+                showAlert('success', result.message);
+                
+                // Auto login
+                CostByteAI.login(formData.email, formData.password);
+                
+                // Proceed to payment
+                setTimeout(() => {
+                    showTab('payment');
+                    // Generate payment reference
+                    document.getElementById('paymentRef').textContent = 
+                        'COSTBYTE-' + Date.now().toString().slice(-6);
+                }, 1500);
+            } else {
+                showAlert('danger', result.message);
+            }
+        }
+        
+        // Payment Methods
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            
+            // Update UI
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.querySelector(`[data-method="${method}"]`).classList.add('selected');
+            
+            // Show payment details
+            document.getElementById('paymentDetails').style.display = 'block';
+            
+            if (method === 'fnb_eft') {
+                document.getElementById('fnbDetails').style.display = 'block';
+                document.getElementById('otherPayment').style.display = 'none';
+            } else {
+                document.getElementById('fnbDetails').style.display = 'none';
+                document.getElementById('otherPayment').style.display = 'block';
+                
+                // Simulate payment processing
+                simulatePayment(method);
+            }
+        }
+        
+        function simulatePayment(method) {
+            const progressBar = document.getElementById('paymentProgress');
+            let progress = 0;
+            
+            const interval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        completePayment();
+                    }, 500);
+                }
+            }, 200);
+        }
+        
+        function simulateFNBpayment() {
+            showAlert('info', 'Simulating FNB EFT payment...');
+            
+            setTimeout(() => {
+                completePayment();
+            }, 2000);
+        }
+        
+        function completePayment() {
+            const user = CostByteAI.currentUser;
+            if (!user) return;
+            
+            const payment = CostByteAI.processPayment(
+                user.id,
+                500,
+                selectedPaymentMethod || 'fnb_eft',
+                { reference: document.getElementById('paymentRef').textContent }
+            );
+            
+            if (payment.success) {
+                showAlert('success', 'Payment successful! AI job hunting activated.');
+                
+                // Send WhatsApp confirmation
+                CostByteAI.sendWhatsAppMessage(
+                    user.whatsapp || user.phone,
+                    `✅ Payment successful! Your AI job hunting is now active. Upload your documents to get started.`
+                );
+                
+                // Proceed to documents
+                setTimeout(() => {
+                    showTab('documents');
+                }, 1500);
+            }
+        }
+        
+        // File Upload Handling
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.currentTarget.classList.add('dragover');
+        }
+        
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('dragover');
+        }
+        
+        function handleDrop(e, type) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            handleFiles(files, type);
+        }
+        
+        function handleFileSelect(input, type) {
+            handleFiles(input.files, type);
+        }
+        
+        function handleFiles(files, type) {
+            for (const file of files) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const fileData = {
+                        name: file.name,
+                        type: file.type,
+                        size: file.size,
+                        data: e.target.result,
+                        uploadedAt: new Date().toISOString()
+                    };
+                    
+                    if (type === 'cv') {
+                        uploadedFiles.cv = fileData;
+                        addFileToList(fileData, 'cvList');
+                    } else if (type === 'photo') {
+                        uploadedFiles.photo = fileData;
+                        addFileToList(fileData, 'photoList');
+                    } else if (type === 'qualifications') {
+                        uploadedFiles.qualifications.push(fileData);
+                        addFileToList(fileData, 'qualList');
+                    }
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function addFileToList(fileData, listId) {
+            const list = document.getElementById(listId);
+            const item = document.createElement('div');
+            item.className = 'file-item';
+            item.innerHTML = `
+                <div>
+                    <strong>${fileData.name}</strong>
+                    <div style="font-size: 0.8rem; color: #6b7280;">
+                        ${formatFileSize(fileData.size)} • ${new Date(fileData.uploadedAt).toLocaleTimeString()}
+                    </div>
+                </div>
+                <div style="color: var(--success);">✓</div>
+            `;
+            list.appendChild(item);
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // Document Processing
+        function processDocuments() {
+            if (!uploadedFiles.cv) {
+                showAlert('warning', 'Please upload your CV first');
+                return;
+            }
+            
+            const processBtn = document.getElementById('processBtn');
+            const aiProcessing = document.getElementById('aiProcessing');
+            const aiResults = document.getElementById('aiResults');
+            
+            processBtn.style.display = 'none';
+            aiProcessing.style.display = 'block';
+            
+            // Simulate AI processing
+            let progress = 0;
+            const progressBar = document.getElementById('aiProgressBar');
+            const status = document.getElementById('aiStatus');
+            
+            const steps = [
+                'Reading CV...',
+                'Analyzing content...',
+                'Enhancing with AI...',
+                'Generating cover letter...',
+                'Optimizing for ATS...',
+                'Finalizing documents...'
+            ];
+            
+            const interval = setInterval(() => {
+                progress += 16.67;
+                progressBar.style.width = progress + '%';
+                
+                const stepIndex = Math.floor(progress / 16.67);
+                if (stepIndex < steps.length) {
+                    status.textContent = steps[stepIndex];
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    
+                    // Process with AI
+                    const user = CostByteAI.currentUser;
+                    CostByteAI.processCV('Sample CV content', user.id).then(result => {
+                        processedDocuments = result;
+                        
+                        // Show results
+                        aiProcessing.style.display = 'none';
+                        aiResults.style.display = 'block';
+                        
+                        // Send WhatsApp notification
+                        CostByteAI.sendWhatsAppMessage(
+                            user.whatsapp || user.phone,
+                            `✅ Your AI-enhanced CV is ready! Download it now from your dashboard.`
+                        );
+                        
+                        showAlert('success', 'AI processing complete! Your enhanced CV is ready for download.');
+                    });
+                }
+            }, 500);
+        }
+        
+        function downloadCV() {
+            if (!processedDocuments) return;
+            
+            const link = document.createElement('a');
+            link.href = processedDocuments.downloadUrl;
+            link.download = 'CostByte_Enhanced_CV.pdf';
+            link.click();
+            
+            showAlert('success', 'CV downloaded successfully!');
+        }
+        
+        function downloadCoverLetter() {
+            const blob = new Blob([processedDocuments?.coverLetter || 'Cover letter'], 
+                                 { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'CostByte_Cover_Letter.pdf';
+            link.click();
+            
+            showAlert('success', 'Cover letter downloaded!');
+        }
+        
+        function showSavingsReport() {
+            if (!processedDocuments?.savings) return;
+            
+            const savings = processedDocuments.savings;
+            const alert = document.createElement('div');
+            alert.className = 'alert alert-success';
+            alert.innerHTML = `
+                <h4>💰 Your Savings Report</h4>
+                <div style="margin: 1rem 0;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                        <div>Traditional job search cost:</div>
+                        <div style="text-align: right;">R${savings.traditionalCost}</div>
+                        
+                        <div>CostByte value delivered:</div>
+                        <div style="text-align: right;">R${savings.costbyteValue}</div>
+                        
+                        <div><strong>Your savings:</strong></div>
+                        <div style="text-align: right; color: var(--success); font-weight: 700;">
+                            R${savings.savings}
+                        </div>
+                        
+                        <div>Return on investment:</div>
+                        <div style="text-align: right; color: var(--success); font-weight: 700;">
+                            ${savings.roi.toFixed(0)}%
+                        </div>
+                    </div>
+                </div>
+                <p>For a once-off R500 fee, you save R${savings.savings} compared to traditional methods!</p>
+            `;
+            
+            document.getElementById('aiResults').prepend(alert);
+        }
+        
+        // Job Search
+        function startJobSearch() {
+            const statusDiv = document.getElementById('jobSearchStatus');
+            const jobsContainer = document.getElementById('jobsContainer');
+            
+            statusDiv.innerHTML = `
+                <div class="alert alert-info">
+                    <strong>🤖 AI Searching for Jobs...</strong>
+                    <p>Scanning Careers24, PNet, Indeed, LinkedIn, and more...</p>
+                    <div class="progress">
+                        <div class="progress-bar" id="jobSearchProgress" style="width: 0%;"></div>
+                    </div>
+                </div>
+            `;
+            
+            let progress = 0;
+            const progressBar = document.getElementById('jobSearchProgress');
+            
+            const interval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    
+                    // Get jobs
+                    const user = CostByteAI.currentUser;
+                    CostByteAI.searchJobs(user).then(result => {
+                        statusDiv.innerHTML = `
+                            <div class="alert alert-success">
+                                <strong>✅ Found ${result.totalJobs} jobs, ${result.matchedJobs} matches!</strong>
+                                <p>AI has found jobs matching your profile.</p>
+                            </div>
+                        `;
+                        
+                        displayJobs(result.jobs);
+                        jobsContainer.style.display = 'block';
+                    });
+                }
+            }, 300);
+        }
+        
+        function displayJobs(jobs) {
+            const table = document.getElementById('jobsTable');
+            const countSpan = document.getElementById('matchedCount');
+            
+            table.innerHTML = '';
+            selectedJobs = [];
+            
+            jobs.forEach(job => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${job.title}</strong></td>
+                    <td>${job.company}</td>
+                    <td>${job.location}</td>
+                    <td>R${job.salary.toLocaleString()}</td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 100px; height: 8px; background: var(--border); border-radius: 4px;">
+                                <div style="width: ${job.matchScore}%; height: 100%; background: var(--success); border-radius: 4px;"></div>
+                            </div>
+                            ${job.matchScore}%
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-outline" onclick="selectJob('${job.id}')">
+                            Select
+                        </button>
+                    </td>
+                `;
+                table.appendChild(row);
+            });
+            
+            countSpan.textContent = jobs.length;
+        }
+        
+        function selectJob(jobId) {
+            if (!selectedJobs.includes(jobId)) {
+                selectedJobs.push(jobId);
+                showAlert('success', 'Job selected for auto-application');
+            }
+        }
+        
+        function autoApplyToAll() {
+            const user = CostByteAI.currentUser;
+            const btn = document.getElementById('autoApplyBtn');
+            const statusDiv = document.getElementById('autoApplyStatus');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<div class="loader"></div> Applying...';
+            
+            statusDiv.style.display = 'block';
+            statusDiv.innerHTML = `
+                <div class="alert alert-info">
+                    <strong>🤖 AI Applying to Jobs...</strong>
+                    <p>Filling application forms, uploading documents, submitting...</p>
+                    <div class="progress">
+                        <div class="progress-bar" id="applyProgress" style="width: 0%;"></div>
+                    </div>
+                </div>
+            `;
+            
+            let progress = 0;
+            const progressBar = document.getElementById('applyProgress');
+            
+            const interval = setInterval(() => {
+                progress += 20;
+                progressBar.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    
+                    // Process applications
+                    CostByteAI.autoApply(user.id, selectedJobs).then(result => {
+                        statusDiv.innerHTML = `
+                            <div class="alert alert-success">
+                                <strong>✅ Applied to ${result.applications.length} jobs!</strong>
+                                <p>AI has successfully submitted your applications.</p>
+                            </div>
+                        `;
+                        
+                        btn.disabled = false;
+                        btn.textContent = '🤖 Auto-Apply to All Matches';
+                        
+                        // Send WhatsApp notification
+                        CostByteAI.sendWhatsAppMessage(
+                            user.whatsapp || user.phone,
+                            `✅ Applied to ${result.applications.length} jobs today! You'll receive updates on any responses.`
+                        );
+                        
+                        // Update dashboard
+                        updateUserDashboard();
+                        loadApplications();
+                    });
+                }
+            }, 500);
+        }
+        
+        function loadApplications() {
+            const user = CostByteAI.currentUser;
+            if (!user) return;
+            
+            const applications = CostByteAI.applications.filter(app => app.userId === user.id);
+            const table = document.getElementById('applicationsTable');
+            
+            table.innerHTML = '';
+            
+            applications.slice(-10).reverse().forEach(app => {
+                const job = CostByteAI.jobs.find(j => j.id === app.jobId);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(app.appliedAt).toLocaleDateString()}</td>
+                    <td>${app.jobTitle}</td>
+                    <td>${app.company}</td>
+                    <td>
+                        <span style="padding: 0.25rem 0.5rem; border-radius: 4px; background: ${app.status === 'applied' ? 'var(--success)' : 'var(--warning)'}; color: white; font-size: 0.8rem;">
+                            ${app.status}
+                        </span>
+                    </td>
+                    <td>${app.matchScore}%</td>
+                `;
+                table.appendChild(row);
+            });
+        }
+        
+        // Dashboard Functions
+        function updateUserDashboard() {
+            const user = CostByteAI.currentUser;
+            if (!user) return;
+            
+            document.getElementById('userWelcome').textContent = `Welcome, ${user.firstName}!`;
+            document.getElementById('totalApps').textContent = user.totalApplications || 0;
+            document.getElementById('successfulApps').textContent = user.successfulApplications || 0;
+            document.getElementById('interviews').textContent = Math.floor((user.totalApplications || 0) * 0.1);
+            document.getElementById('jobOffers').textContent = Math.floor((user.totalApplications || 0) * 0.05);
+            
+            updateDashboardCharts();
+        }
+        
+        function updateDashboardCharts() {
+            const ctx1 = document.getElementById('applicationsChart')?.getContext('2d');
+            const ctx2 = document.getElementById('matchScoreChart')?.getContext('2d');
+            
+            if (ctx1) {
+                new Chart(ctx1, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Applications',
+                            data: [3, 5, 2, 8, 6, 4, 7],
+                            borderColor: 'rgb(37, 99, 235)',
+                            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+            
+            if (ctx2) {
+                new Chart(ctx2, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['High (>80%)', 'Medium (60-80%)', 'Low (<60%)'],
+                        datasets: [{
+                            data: [12, 8, 3],
+                            backgroundColor: [
+                                'rgb(16, 185, 129)',
+                                'rgb(245, 158, 11)',
+                                'rgb(239, 68, 68)'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { position: 'bottom' }
+                        }
+                    }
+                });
+            }
+        }
+        
+        function updateAISettings() {
+            const limit = document.getElementById('dailyLimit').value;
+            const match = document.getElementById('minMatch').value;
+            
+            document.getElementById('limitValue').textContent = limit;
+            document.getElementById('matchValue').textContent = match;
+            
+            showAlert('success', 'AI settings updated!');
+        }
+        
+        // Owner Dashboard
+        function updateOwnerDashboard() {
+            const analytics = CostByteAI.getOwnerAnalytics();
+            
+            // Update stats
+            document.getElementById('totalUsers').textContent = analytics.totalUsers;
+            document.getElementById('paidUsers').textContent = analytics.paidUsers;
+            document.getElementById('totalRevenue').textContent = analytics.totalRevenue.toFixed(2);
+            document.getElementById('totalApplications').textContent = analytics.totalApplications;
+            
+            // Update growth
+            document.getElementById('userGrowth').textContent = analytics.weeklyGrowth.users;
+            document.getElementById('revenueGrowth').textContent = analytics.weeklyGrowth.revenue.toFixed(2);
+            document.getElementById('appGrowth').textContent = analytics.weeklyGrowth.applications;
+            
+            // Update bank distribution
+            document.getElementById('ownerAmount').textContent = analytics.distribution.owner.toFixed(2);
+            document.getElementById('africanAmount').textContent = analytics.distribution.africanBank.toFixed(2);
+            document.getElementById('aiAmount').textContent = analytics.distribution.aiDevelopment.toFixed(2);
+            document.getElementById('reserveAmount').textContent = analytics.distribution.reserve.toFixed(2);
+            document.getElementById('growthAmount').textContent = analytics.distribution.growth.toFixed(2);
+            
+            // Update target progress
+            const targetProgress = document.getElementById('targetProgress');
+            const targetText = document.getElementById('targetText');
+            const progress = (analytics.paidUsers / 5000) * 100;
+            
+            targetProgress.style.width = progress + '%';
+            targetText.textContent = `${analytics.paidUsers}/5,000 users`;
+            
+            // Update revenue chart
+            updateRevenueChart();
+        }
+        
+        function updateRevenueChart() {
+            const ctx = document.getElementById('revenueChart')?.getContext('2d');
+            
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Owner', 'AI Dev', 'Reserve', 'African', 'Growth'],
+                        datasets: [{
+                            label: 'Revenue Distribution',
+                            data: [35000, 20000, 20000, 15000, 10000],
+                            backgroundColor: [
+                                'rgb(37, 99, 235)',
+                                'rgb(124, 58, 237)',
+                                'rgb(245, 158, 11)',
+                                'rgb(16, 185, 129)',
+                                'rgb(239, 68, 68)'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+        }
+        
+        function processWeeklyPayout() {
+            showAlert('info', 'Processing weekly payouts...');
+            
+            setTimeout(() => {
+                // Simulate payout processing
+                const analytics = CostByteAI.getOwnerAnalytics();
+                
+                showAlert('success', 
+                    `Weekly payouts processed!<br>
+                    Owner: R${analytics.distribution.owner.toFixed(2)}<br>
+                    AI Development: R${analytics.distribution.aiDevelopment.toFixed(2)}<br>
+                    Reserve: R${analytics.distribution.reserve.toFixed(2)}<br>
+                    Growth account increased by 10%!`
+                );
+                
+                // Update display
+                updateOwnerDashboard();
+            }, 2000);
+        }
+        
+        function aiSelfUpdate() {
+            showAlert('info', 'AI system updating...');
+            
+            setTimeout(() => {
+                CostByteAI.selfUpdate();
+                showAlert('success', '✅ AI system updated to v2.2.0!');
+            }, 1500);
+        }
+        
+        function generateContent(platform) {
+            const contentDiv = document.getElementById('marketingContent');
+            
+            showAlert('info', `Generating ${platform} content...`);
+            
+            setTimeout(() => {
+                const content = CostByteAI.generateAIContent('socialPost', { platform });
+                
+                contentDiv.innerHTML = `
+                    <div class="alert alert-success">
+                        <strong>✅ ${platform.charAt(0).toUpperCase() + platform.slice(1)} Content Generated:</strong>
+                        <p style="margin: 0.5rem 0; padding: 1rem; background: white; border-radius: 6px;">
+                            "${content}"
+                        </p>
+                        <button class="btn btn-sm btn-primary" onclick="postToSocial('${platform}')">
+                            Post to ${platform}
+                        </button>
+                    </div>
+                `;
+            }, 1000);
+        }
+        
+        function postToSocial(platform) {
+            showAlert('success', `Posted to ${platform}!`);
+        }
+        
+        // WhatsApp Integration
+        function openWhatsApp() {
+            const user = CostByteAI.currentUser;
+            if (user) {
+                const message = encodeURIComponent(
+                    `Hi CostByte! This is ${user.firstName} ${user.lastName}.\n` +
+                    `User ID: ${user.id}\n` +
+                    `I need help with my job search.`
+                );
+                
+                const whatsappUrl = `https://wa.me/27600123456?text=${message}`;
+                window.open(whatsappUrl, '_blank');
+            } else {
+                window.open('https://wa.me/27600123456', '_blank');
+            }
+        }
+        
+        // Savings Calculator
+        function calculateSavings() {
+            const yearsExp = parseInt(document.getElementById('expRange').value);
+            document.getElementById('expValue').textContent = yearsExp + ' years';
+            
+            const savings = {
+                traditionalCost: 800 + 300 + 2000 + 1500,
+                costbyteValue: 4600 * 1.5,
+                savings: 0,
+                roi: 0
+            };
+            
+            savings.savings = savings.costbyteValue - 500;
+            savings.roi = (savings.savings / 500) * 100;
+            
+            // Add experience bonus
+            savings.savings += yearsExp * 100;
+            
+            // Update display
+            document.getElementById('savingsAmount').textContent = savings.savings.toFixed(0);
+            document.getElementById('traditionalCost').textContent = savings.traditionalCost;
+            document.getElementById('costbyteValue').textContent = savings.costbyteValue.toFixed(0);
+            document.getElementById('roiPercent').textContent = savings.roi.toFixed(0);
+            
+            document.getElementById('savingsResult').style.display = 'block';
+        }
+        
+        // Initialize Charts
+        function initializeCharts() {
+            // Initialize any global charts
+        }
+        
+        // Utility Functions
+        function showAlert(type, message) {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.innerHTML = message;
+            alert.style.position = 'fixed';
+            alert.style.top = '20px';
+            alert.style.right = '20px';
+            alert.style.zIndex = '10000';
+            alert.style.maxWidth = '400px';
+            alert.style.boxShadow = 'var(--shadow-lg)';
+            alert.style.animation = 'fadeIn 0.3s ease';
+            
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(alert);
+                }, 300);
+            }, 5000);
+        }
+        
+        // Add fadeOut animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(-10px); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Demo login for testing
+        window.demoLogin = function() {
+            document.getElementById('loginEmail').value = 'test@costbyte.co.za';
+            document.getElementById('loginPassword').value = 'password123';
+            loginUser();
+        };
+        
+        window.ownerLogin = function() {
+            document.getElementById('loginEmail').value = 'owner@costbyte.co.za';
+            document.getElementById('loginPassword').value = 'admin123';
+            loginUser();
+        };
+    </script>
+</body>
+</html>
