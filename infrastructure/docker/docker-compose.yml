@@ -1,0 +1,248 @@
+
+**File: `infrastructure/docker/docker-compose.yml`**
+```yaml
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: costbyte
+      POSTGRES_USER: costbyte
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - costbyte-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U costbyte"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for Caching and Queues
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - costbyte-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Django Backend
+  backend:
+    build:
+      context: ../..
+      dockerfile: infrastructure/docker/Dockerfile.backend
+    environment:
+      - DATABASE_URL=postgresql://costbyte:${DB_PASSWORD:-password}@postgres:5432/costbyte
+      - REDIS_URL=redis://redis:6379/0
+      - DEBUG=${DEBUG:-False}
+      - SECRET_KEY=${SECRET_KEY}
+    volumes:
+      - ../../backend:/app/backend
+      - media_volume:/app/media
+      - static_volume:/app/staticfiles
+      - logs_volume:/app/logs
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - costbyte-network
+    restart: unless-stopped
+    command: >
+      sh -c "
+        python manage.py migrate &&
+        python manage.py collectstatic --noinput &&
+        gunicorn backend.core.wsgi:application --bind 0.0.0.0:8000 --workers 4 --threads 4
+      "
+
+  # Celery Worker
+  celery_worker:
+    build:
+      context: ../..
+      dockerfile: infrastructure/docker/Dockerfile.backend
+    environment:
+      - DATABASE_URL=postgresql://costbyte:${DB_PASSWORD:-password}@postgres:5432/costbyte
+      - REDIS_URL=redis://redis:6379/0
+      - DEBUG=${DEBUG:-False}
+    volumes:
+      - ../../backend:/app/backend
+      - media_volume:/app/media
+      - logs_volume:/app/logs
+    depends_on:
+      - postgres
+      - redis
+      - backend
+    networks:
+      - costbyte-network
+    restart: unless-stopped
+    command: celery -A backend.core worker --loglevel=info --concurrency=4
+
+  # Celery Beat
+  celery_beat:
+    build:
+      context: ../..
+      dockerfile: infrastructure/docker/Dockerfile.backend
+    environment:
+      - DATABASE_URL=postgresql://costbyte:${DB_PASSWORD:-password}@postgres:5432/costbyte
+      - REDIS_URL=redis://redis:6379/0
+      - DEBUG=${DEBUG:-False}
+    volumes:
+      - ../../backend:/app/backend
+      - media_volume:/app/media
+      - logs_volume:/app/logs
+    depends_on:
+      - postgres
+      - redis
+      - backend
+    networks:
+      - costbyte-network
+    restart: unless-stopped
+    command: celery -A backend.core beat --loglevel=info
+
+  # React Frontend
+  frontend:
+    build:
+      context: ../..
+      dockerfile: infrastructure/docker/Dockerfile.frontend
+    environment:
+      - REACT_APP_API_URL=${BACKEND_URL:-http://localhost:8000}
+      - REACT_APP_WS_URL=${WS_URL:-ws://localhost:8000}
+    volumes:
+      - ../../frontend:/app/frontend
+      - /app/frontend/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - costbyte-network
+    restart: unless-stopped
+    command: npm start
+
+  # AI Services
+  ai_services:
+    build:
+      context: ../..
+      dockerfile: infrastructure/docker/Dockerfile.ai
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - HUGGINGFACE_TOKEN=${HUGGINGFACE_TOKEN}
+      - REDIS_URL=redis://redis:6379/0
+      - BACKEND_URL=http://backend:8000
+    volumes:
+      - ../../ai_services:/app/ai_services
+      - media_volume:/app/media
+      - models_volume:/app/models
+      - logs_volume:/app/logs
+    depends_on:
+      - redis
+      - backend
+    networks:
+      - costbyte-network
+    restart: unless-stopped
+    command: python main.py
+
+  # Nginx Reverse Proxy
+  nginx:
+    build:
+      context: ../..
+      dockerfile: infrastructure/docker/Dockerfile.nginx
+    volumes:
+      - ../../infrastructure/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ../../infrastructure/nginx/sites-available:/etc/nginx/sites-available
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+      - logs_volume:/var/log/nginx
+      - ./ssl:/etc/nginx/ssl
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - costbyte-network
+    restart: unless-stopped
+
+  # Monitoring - Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ../../infrastructure/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - costbyte-network
+    restart: unless-stopped
+
+  # Monitoring - Grafana
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ../../infrastructure/monitoring/grafana.ini:/etc/grafana/grafana.ini
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - costbyte-network
+    restart: unless-stopped
+
+  # Marketing Automation
+  marketing:
+    build:
+      context: ../..
+      dockerfile: infrastructure/docker/Dockerfile.backend
+    environment:
+      - FACEBOOK_ACCESS_TOKEN=${FACEBOOK_ACCESS_TOKEN}
+      - INSTAGRAM_ACCESS_TOKEN=${INSTAGRAM_ACCESS_TOKEN}
+      - TIKTOK_ACCESS_TOKEN=${TIKTOK_ACCESS_TOKEN}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ../../marketing:/app/marketing
+      - media_volume:/app/media
+      - marketing_volume:/app/marketing_content
+    depends_on:
+      - redis
+    networks:
+      - costbyte-network
+    restart: unless-stopped
+    command: python -m marketing.content_creator.main
+
+volumes:
+  postgres_data:
+  redis_data:
+  static_volume:
+  media_volume:
+  logs_volume:
+  models_volume:
+  prometheus_data:
+  grafana_data:
+  marketing_volume:
+
+networks:
+  costbyte-network:
+    driver: bridge
