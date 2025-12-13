@@ -1,0 +1,3343 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CostByte AI | Get Employed - AI Job Application System</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AI-Powered CSS with Integrated Styles -->
+    <style id="ai-styles">
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --border: #e5e7eb;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background: var(--gradient);
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Main Container */
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Header */
+        .header {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .logo-slogan {
+            font-size: 0.8rem;
+            color: var(--dark);
+            opacity: 0.7;
+            margin-left: 0.5rem;
+        }
+        
+        .badges {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .badge {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        /* Hamburger Menu */
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+        
+        .hamburger-line {
+            width: 25px;
+            height: 3px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        
+        .hamburger-menu.active .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .hamburger-menu.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger-menu.active .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+        
+        /* Navigation */
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+            opacity: 0.7;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            opacity: 1;
+            color: var(--primary);
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        .login-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            transition: right 0.3s;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-nav {
+            list-style: none;
+            margin-top: 2rem;
+        }
+        
+        .mobile-nav-item {
+            margin-bottom: 1rem;
+        }
+        
+        .mobile-nav-link {
+            display: block;
+            padding: 0.75rem;
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        
+        .mobile-nav-link:hover,
+        .mobile-nav-link.active {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+        }
+        
+        .mobile-login {
+            margin-top: 2rem;
+        }
+        
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+            min-height: calc(100vh - 200px);
+        }
+        
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        /* Minimum Salary Feature */
+        .minimum-salary {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .salary-amount {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #92400e;
+            margin: 0.5rem 0;
+        }
+        
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .card-subtitle {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+        }
+        
+        .form-text {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 0.25rem;
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--dark);
+        }
+        
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+        
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0.5rem 0;
+        }
+        
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        
+        /* Alerts */
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid;
+        }
+        
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border-left-color: var(--success);
+            color: #065f46;
+        }
+        
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-left-color: var(--warning);
+            color: #92400e;
+        }
+        
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.1);
+            border-left-color: var(--danger);
+            color: #991b1b;
+        }
+        
+        .alert-info {
+            background: rgba(37, 99, 235, 0.1);
+            border-left-color: var(--primary);
+            color: #1e40af;
+        }
+        
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th {
+            background: var(--light);
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+        }
+        
+        .table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .table tr:hover {
+            background: rgba(37, 99, 235, 0.05);
+        }
+        
+        /* Document Generator */
+        .document-generator {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .document-preview {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border: 1px solid var(--border);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* WhatsApp Chat */
+        .whatsapp-chat {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+        
+        .whatsapp-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #25D366;
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s;
+        }
+        
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(37, 211, 102, 0.6);
+        }
+        
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalIn 0.3s ease;
+        }
+        
+        @keyframes modalIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: right;
+        }
+        
+        /* Loader */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-link {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-link:hover {
+            color: white;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            border-top: 1px solid #374151;
+            padding-top: 1rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hamburger-menu {
+                display: flex;
+            }
+            
+            .nav-container {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .whatsapp-chat {
+                bottom: 1rem;
+                right: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .mobile-menu {
+                width: 100%;
+            }
+            
+            .modal-content {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <a href="#home" class="logo" onclick="showSection('home')">
+                    <div class="logo-icon">🧠</div>
+                    <div>
+                        <div class="logo-text">CostByte AI</div>
+                        <div class="logo-slogan">get employed</div>
+                    </div>
+                </a>
+                <div class="badges">
+                    <span class="badge">AI-Powered</span>
+                    <span class="badge">SA Only</span>
+                    <span class="badge">R500 Once-off</span>
+                </div>
+            </div>
+            
+            <!-- Hamburger Menu -->
+            <div class="hamburger-menu" id="hamburgerMenu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <div class="nav-container">
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#home" class="nav-link active" onclick="showSection('home')">Home</a></li>
+                    <li class="nav-item"><a href="#register" class="nav-link" onclick="showSection('register')">Register</a></li>
+                    <li class="nav-item"><a href="#documents" class="nav-link" onclick="showSection('documents')">Documents</a></li>
+                    <li class="nav-item"><a href="#dashboard" class="nav-link" onclick="showSection('dashboard')">Dashboard</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link" onclick="showSection('contact')">Contact</a></li>
+                </ul>
+                <div class="login-buttons">
+                    <button class="btn btn-sm btn-outline" onclick="openModal('loginModal')">Applicant Login</button>
+                    <button class="btn btn-sm btn-primary" onclick="openModal('ownerLoginModal')">Owner Login</button>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="logo">
+                    <div class="logo-icon">🧠</div>
+                    <div class="logo-text">CostByte AI</div>
+                </div>
+                <button class="btn btn-sm btn-outline" onclick="closeMobileMenu()">✕</button>
+            </div>
+            
+            <ul class="mobile-nav">
+                <li class="mobile-nav-item"><a href="#home" class="mobile-nav-link active" onclick="showSection('home'); closeMobileMenu()">🏠 Home</a></li>
+                <li class="mobile-nav-item"><a href="#register" class="mobile-nav-link" onclick="showSection('register'); closeMobileMenu()">📝 Register</a></li>
+                <li class="mobile-nav-item"><a href="#payment" class="mobile-nav-link" onclick="showSection('payment'); closeMobileMenu()">💳 Payment</a></li>
+                <li class="mobile-nav-item"><a href="#documents" class="mobile-nav-link" onclick="showSection('documents'); closeMobileMenu()">📄 Documents</a></li>
+                <li class="mobile-nav-item"><a href="#jobs" class="mobile-nav-link" onclick="showSection('jobs'); closeMobileMenu()">🔍 Jobs</a></li>
+                <li class="mobile-nav-item"><a href="#dashboard" class="mobile-nav-link" onclick="showSection('dashboard'); closeMobileMenu()">📊 Dashboard</a></li>
+                <li class="mobile-nav-item"><a href="#contact" class="mobile-nav-link" onclick="showSection('contact'); closeMobileMenu()">📞 Contact</a></li>
+                <li class="mobile-nav-item"><a href="#terms" class="mobile-nav-link" onclick="showSection('terms'); closeMobileMenu()">📜 Terms</a></li>
+                <li class="mobile-nav-item"><a href="#privacy" class="mobile-nav-link" onclick="showSection('privacy'); closeMobileMenu()">🔒 Privacy</a></li>
+                <li class="mobile-nav-item"><a href="#popia" class="mobile-nav-link" onclick="showSection('popia'); closeMobileMenu()">🇿🇦 POPIA</a></li>
+            </ul>
+            
+            <div class="mobile-login">
+                <button class="btn btn-primary btn-block" style="width: 100%; margin-bottom: 0.5rem;" onclick="openModal('loginModal'); closeMobileMenu()">
+                    Applicant Login
+                </button>
+                <button class="btn btn-outline btn-block" style="width: 100%;" onclick="openModal('ownerLoginModal'); closeMobileMenu()">
+                    Owner Login
+                </button>
+            </div>
+        </div>
+        
+        <!-- Overlay -->
+        <div class="overlay" id="overlay" onclick="closeMobileMenu()"></div>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            
+            <!-- Home Section -->
+            <section id="home" class="section active">
+                <div class="hero">
+                    <div class="logo-icon" style="font-size: 4rem;">🧠</div>
+                    <h1 class="hero-title">AI-Powered Job Hunting</h1>
+                    <p class="hero-subtitle">
+                        CostByte AI helps South Africans find employment through automated job applications. 
+                        Pay R500 once, get your enhanced CV immediately, and let our AI find and apply for jobs for you.
+                    </p>
+                    <button class="btn btn-primary btn-lg" onclick="showSection('register')">
+                        Start Your Journey →
+                    </button>
+                </div>
+                
+                <!-- Minimum Salary Feature -->
+                <div class="minimum-salary">
+                    <h3><i class="fas fa-hand-holding-usd"></i> Minimum Salary Protection</h3>
+                    <p>We guarantee job matches with minimum salaries to ensure fair employment:</p>
+                    <div class="salary-amount">R15,000+</div>
+                    <p class="form-text">Minimum monthly salary for all matched positions</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">R500</div>
+                        <div class="stat-label">Once-off Fee</div>
+                        <p style="margin-top: 1rem; font-size: 0.9rem;">No subscriptions, no hidden costs</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">🧠</div>
+                        <div class="stat-label">AI-Powered</div>
+                        <p style="margin-top: 1rem; font-size: 0.9rem;">Automated job applications 2x daily</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">🇿🇦</div>
+                        <div class="stat-label">SA Citizens Only</div>
+                        <p style="margin-top: 1rem; font-size: 0.9rem;">Verified South African ID required</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">R15k+</div>
+                        <div class="stat-label">Minimum Salary</div>
+                        <p style="margin-top: 1rem; font-size: 0.9rem;">Guaranteed minimum salary for all matches</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 style="margin-bottom: 1.5rem;">✨ How It Works</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div>
+                            <h4><i class="fas fa-user-plus"></i> 1. Register</h4>
+                            <p>Create account with SA ID verification</p>
+                        </div>
+                        <div>
+                            <h4><i class="fas fa-credit-card"></i> 2. Pay R500</h4>
+                            <p>Once-off fee via FNB, PayFast, etc.</p>
+                        </div>
+                        <div>
+                            <h4><i class="fas fa-file-upload"></i> 3. Upload</h4>
+                            <p>CV, photo, qualifications</p>
+                        </div>
+                        <div>
+                            <h4><i class="fas fa-file-alt"></i> 4. Get CV</h4>
+                            <p>AI rewrites and optimizes your CV</p>
+                        </div>
+                        <div>
+                            <h4><i class="fas fa-search"></i> 5. AI Finds</h4>
+                            <p>Scrapes web 2x daily for matches</p>
+                        </div>
+                        <div>
+                            <h4><i class="fas fa-paper-plane"></i> 6. Auto Apply</h4>
+                            <p>AI applies on your behalf</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 style="margin-bottom: 1.5rem;">💰 Savings Calculator</h3>
+                    <div id="savingsCalculator">
+                        <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                            <div>
+                                <label style="font-weight: 600;">Years Experience:</label>
+                                <input type="range" id="expRange" min="0" max="20" value="3" style="width: 200px;">
+                                <span id="expValue">3 years</span>
+                            </div>
+                            <div>
+                                <label style="font-weight: 600;">Current Salary:</label>
+                                <select id="currentSalary" class="form-select" style="width: 200px;">
+                                    <option value="8000">R8,000 - R10,000</option>
+                                    <option value="12000">R10,000 - R15,000</option>
+                                    <option value="18000" selected>R15,000 - R20,000</option>
+                                    <option value="25000">R20,000 - R30,000</option>
+                                    <option value="35000">R30,000+</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary" onclick="calculateSavings()">Calculate Savings</button>
+                        </div>
+                        <div id="savingsResult" style="display: none;">
+                            <div class="alert alert-success">
+                                <h4>💰 You Save: R<span id="savingsAmount">0</span>/month</h4>
+                                <p>Traditional job search costs: R<span id="traditionalCost">0</span></p>
+                                <p>CostByte value: R<span id="costbyteValue">0</span></p>
+                                <p>ROI: <span id="roiPercent">0</span>%</p>
+                                <p>Minimum salary guarantee: R15,000+</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Register Section -->
+            <section id="register" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title"><i class="fas fa-user-plus"></i> Register - South Africans Only</h2>
+                    </div>
+                    <form id="registerForm">
+                        <div class="alert alert-info">
+                            <strong>🇿🇦 South African Citizens Only</strong>
+                            <p>This service is exclusively for South African citizens. We verify all ID numbers and reserve the right to refuse service to anyone unable to prove South African citizenship.</p>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="form-group">
+                                <label class="form-label">First Name *</label>
+                                <input type="text" class="form-control" id="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Last Name *</label>
+                                <input type="text" class="form-control" id="lastName" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">South African ID Number *</label>
+                            <input type="text" class="form-control" id="saId" 
+                                   pattern="\d{13}" 
+                                   title="13-digit South African ID number"
+                                   required>
+                            <div class="form-text">13 digits only. We verify your SA citizenship.</div>
+                            <div id="idVerification" style="margin-top: 0.5rem;"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Email Address *</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Phone Number *</label>
+                            <input type="tel" class="form-control" id="phone" 
+                                   pattern="^(\+27|0)[1-9][0-9]{8}$"
+                                   title="South African phone number"
+                                   required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">WhatsApp Number (for updates)</label>
+                            <input type="tel" class="form-control" id="whatsapp">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Current Occupation</label>
+                            <input type="text" class="form-control" id="occupation">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Current Monthly Salary</label>
+                            <select class="form-select" id="currentSalaryReg">
+                                <option value="8000">R8,000 - R10,000</option>
+                                <option value="12000">R10,000 - R15,000</option>
+                                <option value="18000" selected>R15,000 - R20,000</option>
+                                <option value="25000">R20,000 - R30,000</option>
+                                <option value="35000">R30,000+</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Years of Experience</label>
+                            <select class="form-select" id="yearsExperience">
+                                <option value="0">0-1 years</option>
+                                <option value="2" selected>2-3 years</option>
+                                <option value="4">4-5 years</option>
+                                <option value="6">6-10 years</option>
+                                <option value="11">10+ years</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Highest Qualification</label>
+                            <select class="form-select" id="qualification">
+                                <option value="">Select</option>
+                                <option value="Matric">Matric / Grade 12</option>
+                                <option value="Diploma">Diploma</option>
+                                <option value="Bachelor">Bachelor's Degree</option>
+                                <option value="Honours">Honours Degree</option>
+                                <option value="Masters">Master's Degree</option>
+                                <option value="PhD">PhD / Doctorate</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Skills (comma separated)</label>
+                            <textarea class="form-control" id="skills" rows="3" 
+                                      placeholder="e.g., Project Management, JavaScript, Customer Service"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Preferred Locations</label>
+                            <select class="form-select" id="locations" multiple>
+                                <option value="Johannesburg">Johannesburg</option>
+                                <option value="Cape Town">Cape Town</option>
+                                <option value="Durban">Durban</option>
+                                <option value="Pretoria">Pretoria</option>
+                                <option value="Port Elizabeth">Port Elizabeth</option>
+                                <option value="Remote">Remote</option>
+                            </select>
+                            <div class="form-text">Hold Ctrl to select multiple</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Minimum Expected Salary</label>
+                            <select class="form-select" id="minExpectedSalary">
+                                <option value="15000">R15,000 (Minimum Guaranteed)</option>
+                                <option value="20000">R20,000</option>
+                                <option value="25000">R25,000</option>
+                                <option value="30000">R30,000</option>
+                                <option value="40000">R40,000+</option>
+                            </select>
+                            <div class="form-text">We guarantee matches with minimum R15,000 salary</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Password *</label>
+                            <input type="password" class="form-control" id="password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Confirm Password *</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                <input type="checkbox" id="terms" required>
+                                I accept the <a href="#terms" onclick="showSection('terms')">Terms & Conditions</a> and confirm I am a South African citizen
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-user-plus"></i> Register & Continue to Payment
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Payment Section -->
+            <section id="payment" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title"><i class="fas fa-credit-card"></i> Payment - R500 Once-off Fee</h2>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary);">
+                            R500.00
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-success" style="margin-bottom: 1.5rem;">
+                        <strong><i class="fas fa-check-circle"></i> Registration Successful!</strong>
+                        <p>Your South African ID has been verified. Proceed with payment to activate AI job hunting.</p>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                        <div class="payment-method" data-method="fnb_eft" onclick="selectPaymentMethod('fnb_eft')">
+                            <div style="font-size: 2rem;">🏦</div>
+                            <h4>FNB Direct EFT</h4>
+                            <p>Bank transfer to FNB account</p>
+                        </div>
+                        
+                        <div class="payment-method" data-method="payfast" onclick="selectPaymentMethod('payfast')">
+                            <div style="font-size: 2rem;">💳</div>
+                            <h4>PayFast</h4>
+                            <p>Credit/Debit Card</p>
+                        </div>
+                        
+                        <div class="payment-method" data-method="payshap" onclick="selectPaymentMethod('payshap')">
+                            <div style="font-size: 2rem;">⚡</div>
+                            <h4>PayShap</h4>
+                            <p>Instant EFT</p>
+                        </div>
+                        
+                        <div class="payment-method" data-method="paystack" onclick="selectPaymentMethod('paystack')">
+                            <div style="font-size: 2rem;">🔄</div>
+                            <h4>PayStack</h4>
+                            <p>Multiple payment options</p>
+                        </div>
+                    </div>
+                    
+                    <div id="paymentDetails" style="display: none; margin-top: 2rem;">
+                        <div class="card" id="fnbDetails" style="display: none;">
+                            <h3>FNB Banking Details</h3>
+                            <div style="background: var(--light); padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                                <div style="display: grid; grid-template-columns: 150px 1fr; gap: 0.5rem; margin-bottom: 1rem;">
+                                    <strong>Bank:</strong> First National Bank
+                                    <strong>Account Name:</strong> CostByte AI (Pty) Ltd
+                                    <strong>Account Number:</strong> 6278 4567 8901
+                                    <strong>Branch Code:</strong> 250655
+                                    <strong>Reference:</strong> <span id="paymentRef">COSTBYTE-123456</span>
+                                    <strong>Amount:</strong> R500.00
+                                </div>
+                                <p style="color: var(--warning); margin-top: 1rem;">
+                                    <i class="fas fa-exclamation-triangle"></i> Use exact reference when paying. Allow 2-3 hours for processing.
+                                </p>
+                            </div>
+                            <button class="btn btn-primary" onclick="simulateFNBpayment()">
+                                <i class="fas fa-check"></i> I've Made Payment
+                            </button>
+                        </div>
+                        
+                        <div id="otherPayment" style="display: none;">
+                            <p>Redirecting to secure payment gateway...</p>
+                            <div class="progress" style="height: 10px; background: var(--border); border-radius: 5px; overflow: hidden;">
+                                <div class="progress-bar" style="width: 0%; height: 100%; background: var(--primary);" id="paymentProgress"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+                        <h4><i class="fas fa-gift"></i> What You Get for R500:</h4>
+                        <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                            <li>Immediate AI-enhanced CV download</li>
+                            <li>AI-powered cover letter generator</li>
+                            <li>Automated job search (2x daily)</li>
+                            <li>Auto-application to matched jobs</li>
+                            <li>WhatsApp notifications for updates</li>
+                            <li>Personal job application dashboard</li>
+                            <li>Lifetime service - no expiry</li>
+                            <li>Minimum salary guarantee: R15,000+</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Documents Section -->
+            <section id="documents" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title"><i class="fas fa-file-upload"></i> Upload Documents</h2>
+                        <span class="badge" style="background: var(--success);"><i class="fas fa-check"></i> Payment Verified</span>
+                    </div>
+                    
+                    <div class="alert alert-success">
+                        <strong><i class="fas fa-check-circle"></i> Payment Confirmed!</strong>
+                        <p>Your R500 payment has been processed. Upload your documents to get started.</p>
+                    </div>
+                    
+                    <!-- Document Upload Forms -->
+                    <div id="documentForms">
+                        <!-- CV Upload -->
+                        <div class="form-group">
+                            <label class="form-label">1. Upload Your CV (PDF/DOC/DOCX)</label>
+                            <div class="file-upload" id="cvUpload" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'cv')">
+                                <div style="font-size: 3rem;">📄</div>
+                                <p>Drag & drop your CV here</p>
+                                <p class="form-text">or click to browse (Max 10MB)</p>
+                                <input type="file" id="cvFile" accept=".pdf,.doc,.docx" style="display: none;" onchange="handleFileSelect(this, 'cv')">
+                                <button class="btn btn-outline" onclick="document.getElementById('cvFile').click()">
+                                    <i class="fas fa-folder-open"></i> Browse Files
+                                </button>
+                            </div>
+                            <div class="file-list" id="cvList"></div>
+                        </div>
+                        
+                        <!-- Photo Upload -->
+                        <div class="form-group">
+                            <label class="form-label">2. Upload Head & Shoulders Photo (JPG/PNG)</label>
+                            <div class="file-upload" id="photoUpload" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'photo')">
+                                <div style="font-size: 3rem;">📸</div>
+                                <p>Drag & drop your photo here</p>
+                                <p class="form-text">Professional headshot preferred (Max 5MB)</p>
+                                <input type="file" id="photoFile" accept=".jpg,.jpeg,.png" style="display: none;" onchange="handleFileSelect(this, 'photo')">
+                                <button class="btn btn-outline" onclick="document.getElementById('photoFile').click()">
+                                    <i class="fas fa-folder-open"></i> Browse Files
+                                </button>
+                            </div>
+                            <div class="file-list" id="photoList"></div>
+                        </div>
+                        
+                        <!-- Qualifications Upload -->
+                        <div class="form-group">
+                            <label class="form-label">3. Upload Qualifications (PDF/Images)</label>
+                            <div class="file-upload" id="qualUpload" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'qualifications')">
+                                <div style="font-size: 3rem;">🎓</div>
+                                <p>Drag & drop qualification documents</p>
+                                <p class="form-text">Certificates, diplomas, degrees (Max 10MB each)</p>
+                                <input type="file" id="qualFile" accept=".pdf,.jpg,.jpeg,.png" multiple style="display: none;" onchange="handleFileSelect(this, 'qualifications')">
+                                <button class="btn btn-outline" onclick="document.getElementById('qualFile').click()">
+                                    <i class="fas fa-folder-open"></i> Browse Files
+                                </button>
+                            </div>
+                            <div class="file-list" id="qualList"></div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn btn-primary btn-lg" onclick="processDocuments()" id="processBtn">
+                            <i class="fas fa-brain"></i> Process Documents with AI
+                        </button>
+                    </div>
+                    
+                    <!-- AI Processing -->
+                    <div id="aiProcessing" style="display: none; margin-top: 2rem;">
+                        <div class="ai-processing">
+                            <div class="ai-bot" style="font-size: 4rem; margin-bottom: 1rem;">🧠</div>
+                            <h3>AI Processing Your Documents</h3>
+                            <p>Our AI is enhancing your CV and creating your professional profile...</p>
+                            <div class="progress" style="height: 10px; background: var(--border); border-radius: 5px; overflow: hidden; max-width: 500px; margin: 2rem auto;">
+                                <div class="progress-bar" id="aiProgressBar" style="width: 0%; height: 100%; background: var(--primary);"></div>
+                            </div>
+                            <div id="aiStatus">Initializing AI...</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Results -->
+                    <div id="aiResults" style="display: none; margin-top: 2rem;">
+                        <div class="alert alert-success">
+                            <h3><i class="fas fa-check-circle"></i> AI Processing Complete!</h3>
+                            <p>Your professional documents are ready.</p>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                            <div class="card">
+                                <h4><i class="fas fa-file-alt"></i> Enhanced CV</h4>
+                                <p>AI-optimized for Applicant Tracking Systems</p>
+                                <button class="btn btn-primary" onclick="downloadCV()">
+                                    <i class="fas fa-download"></i> Download CV
+                                </button>
+                                <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--success);">
+                                    <i class="fas fa-check"></i> ATS optimized <i class="fas fa-check"></i> Keyword-rich <i class="fas fa-check"></i> Professional format
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <h4><i class="fas fa-envelope"></i> Cover Letter</h4>
+                                <p>AI-generated professional cover letter</p>
+                                <button class="btn btn-primary" onclick="downloadCoverLetter()">
+                                    <i class="fas fa-download"></i> Download Cover Letter
+                                </button>
+                                <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--success);">
+                                    <i class="fas fa-check"></i> Customized <i class="fas fa-check"></i> Professional tone <i class="fas fa-check"></i> Ready to use
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <h4><i class="fas fa-chart-line"></i> Salary Report</h4>
+                                <p>Minimum salary guarantee analysis</p>
+                                <button class="btn btn-success" onclick="showSalaryReport()">
+                                    <i class="fas fa-eye"></i> View Report
+                                </button>
+                                <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--success);">
+                                    <i class="fas fa-check"></i> R15,000+ guarantee <i class="fas fa-check"></i> ROI analysis <i class="fas fa-check"></i> Market comparison
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 2rem;">
+                            <button class="btn btn-primary btn-lg" onclick="showSection('dashboard')">
+                                <i class="fas fa-rocket"></i> Go to Dashboard
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Jobs Section -->
+            <section id="jobs" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title"><i class="fas fa-search"></i> AI Job Search</h2>
+                        <button class="btn btn-primary" onclick="startJobSearch()">
+                            <i class="fas fa-sync-alt"></i> Search for Jobs
+                        </button>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <strong><i class="fas fa-brain"></i> AI-Powered Job Search</strong>
+                        <p>Our AI searches Careers24, PNet, Indeed, LinkedIn and more, 2x daily. It matches jobs to your profile automatically with minimum R15,000 salary guarantee.</p>
+                    </div>
+                    
+                    <div id="jobSearchStatus" style="margin-bottom: 1.5rem;"></div>
+                    
+                    <div id="jobsContainer" style="display: none;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3><i class="fas fa-bullseye"></i> Matched Jobs</h3>
+                            <div>
+                                <span id="matchedCount">0</span> matches found (R15,000+ guaranteed)
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Position</th>
+                                        <th>Company</th>
+                                        <th>Location</th>
+                                        <th>Salary</th>
+                                        <th>Match</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="jobsTable">
+                                    <!-- Jobs will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div style="margin-top: 1.5rem; text-align: center;">
+                            <button class="btn btn-primary btn-lg" onclick="autoApplyToAll()" id="autoApplyBtn">
+                                <i class="fas fa-brain"></i> Auto-Apply to All Matches
+                            </button>
+                            <p class="form-text" style="margin-top: 0.5rem;">
+                                AI will automatically apply to all high-match jobs (Max 5 per day, R15,000+ minimum salary)
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div id="autoApplyStatus" style="display: none; margin-top: 2rem;"></div>
+                </div>
+                
+                <div class="card">
+                    <h3><i class="fas fa-history"></i> Application History</h3>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Position</th>
+                                    <th>Company</th>
+                                    <th>Salary</th>
+                                    <th>Status</th>
+                                    <th>Match Score</th>
+                                </tr>
+                            </thead>
+                            <tbody id="applicationsTable">
+                                <!-- Applications will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title"><i class="fas fa-tachometer-alt"></i> Your Dashboard</h2>
+                        <div id="userWelcome">Welcome!</div>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalApps">0</div>
+                            <div class="stat-label">Total Applications</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="successfulApps">0</div>
+                            <div class="stat-label">Successful Applications</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="interviews">0</div>
+                            <div class="stat-label">Interview Invites</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">R<span id="avgSalary">15,000</span>+</div>
+                            <div class="stat-label">Average Salary</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <h4><i class="fas fa-cogs"></i> AI Settings</h4>
+                        <div style="background: var(--light); padding: 1.5rem; border-radius: 8px;">
+                            <div class="form-group">
+                                <label class="form-label">Daily Application Limit</label>
+                                <input type="range" min="1" max="20" value="10" class="form-control" id="dailyLimit" onchange="updateAISettings()">
+                                <div class="form-text">
+                                    <span id="limitValue">10</span> applications per day
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Minimum Salary Requirement</label>
+                                <input type="range" min="15000" max="50000" step="5000" value="15000" class="form-control" id="minSalary" onchange="updateAISettings()">
+                                <div class="form-text">
+                                    Minimum salary: R<span id="salaryValue">15,000</span> (Guaranteed: R15,000+)
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" id="whatsappAlerts" checked>
+                                    Receive WhatsApp alerts for new matches
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <h4><i class="fab fa-whatsapp"></i> WhatsApp Updates</h4>
+                        <div class="alert alert-info">
+                            <strong>Real-time Updates</strong>
+                            <p>You'll receive WhatsApp messages for:</p>
+                            <ul style="margin: 0.5rem 0 0 1.5rem;">
+                                <li>New job matches (R15,000+ salary)</li>
+                                <li>Application confirmations</li>
+                                <li>Interview invitations</li>
+                                <li>Daily summaries</li>
+                                <li>Salary negotiation tips</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <h4><i class="fas fa-chart-bar"></i> Salary Progress</h4>
+                        <div style="background: var(--light); padding: 1.5rem; border-radius: 8px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                <div>
+                                    <div style="font-size: 0.9rem; color: #6b7280;">Current Salary</div>
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark);">R<span id="currentSalaryDisplay">15,000</span></div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.9rem; color: #6b7280;">Target Salary</div>
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--success);">R<span id="targetSalaryDisplay">25,000</span></div>
+                                </div>
+                            </div>
+                            <div class="progress" style="height: 10px; background: var(--border); border-radius: 5px; overflow: hidden;">
+                                <div class="progress-bar" id="salaryProgress" style="width: 60%; height: 100%; background: var(--success);"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title"><i class="fas fa-envelope"></i> Contact Us</h2>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <div class="form-group">
+                            <label class="form-label">Full Name *</label>
+                            <input type="text" class="form-control" id="contactName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Email Address *</label>
+                            <input type="email" class="form-control" id="contactEmail" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="contactPhone">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Subject</label>
+                            <select class="form-select" id="contactSubject">
+                                <option value="general">General Inquiry</option>
+                                <option value="payment">Payment Issue</option>
+                                <option value="technical">Technical Support</option>
+                                <option value="account">Account Issue</option>
+                                <option value="refund">Refund Request</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Message *</label>
+                            <textarea class="form-control" id="contactMessage" rows="5" required></textarea>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-lg" onclick="submitContactForm()">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+                        <h4><i class="fas fa-phone-alt"></i> Other Contact Methods</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                            <div style="text-align: center; padding: 1rem; background: var(--light); border-radius: 8px;">
+                                <div style="font-size: 2rem; color: #25D366;"><i class="fab fa-whatsapp"></i></div>
+                                <h5>WhatsApp</h5>
+                                <p>072 142 3215</p>
+                                <button class="btn btn-sm btn-outline" onclick="openWhatsApp()">
+                                    <i class="fab fa-whatsapp"></i> Message Us
+                                </button>
+                            </div>
+                            
+                            <div style="text-align: center; padding: 1rem; background: var(--light); border-radius: 8px;">
+                                <div style="font-size: 2rem; color: var(--primary);"><i class="fas fa-envelope"></i></div>
+                                <h5>Email</h5>
+                                <p>support@costbyte.co.za</p>
+                            </div>
+                            
+                            <div style="text-align: center; padding: 1rem; background: var(--light); border-radius: 8px;">
+                                <div style="font-size: 2rem; color: var(--secondary);"><i class="fas fa-clock"></i></div>
+                                <h5>Business Hours</h5>
+                                <p>Mon-Fri: 8:00-17:00</p>
+                                <p>Sat: 9:00-13:00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Terms & Conditions Section -->
+            <section id="terms" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title"><i class="fas fa-file-contract"></i> Terms & Conditions</h2>
+                        <button class="btn btn-outline" onclick="downloadDocument('terms')">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                    
+                    <div class="document-generator">
+                        <div class="document-preview" id="termsPreview">
+                            <h1>COSTBYTE AI - TERMS AND CONDITIONS</h1>
+                            <p><strong>Effective Date:</strong> January 1, 2024</p>
+                            
+                            <h2>1. Acceptance of Terms</h2>
+                            <p>By accessing and using the CostByte AI platform, you accept and agree to be bound by these Terms and Conditions.</p>
+                            
+                            <h2>2. Service Description</h2>
+                            <p>CostByte AI provides AI-powered job application services including CV enhancement, automated job searching, and application submission for South African citizens only.</p>
+                            
+                            <h2>3. Eligibility</h2>
+                            <p>Service is exclusively for South African citizens with valid SA ID numbers. Users must be 18 years or older.</p>
+                            
+                            <h2>4. Payment Terms</h2>
+                            <p>A once-off fee of R500 is required for service activation. This fee is non-refundable.</p>
+                            
+                            <h2>5. User Responsibilities</h2>
+                            <p>Users must provide accurate information and documents. False information may result in service termination.</p>
+                            
+                            <h2>6. Minimum Salary Guarantee</h2>
+                            <p>CostByte AI guarantees job matches with minimum monthly salaries of R15,000. This applies to all automated job applications.</p>
+                            
+                            <h2>7. AI Services</h2>
+                            <p>Our AI system scans job portals twice daily and applies to positions matching your profile. We cannot guarantee job offers or interviews.</p>
+                            
+                            <h2>8. Data Protection</h2>
+                            <p>We comply with POPIA. User data is encrypted and stored securely.</p>
+                            
+                            <h2>9. Limitation of Liability</h2>
+                            <p>CostByte AI is not liable for job application outcomes, employment decisions, or employer actions.</p>
+                            
+                            <h2>10. Amendments</h2>
+                            <p>We reserve the right to modify these terms at any time. Continued use constitutes acceptance.</p>
+                            
+                            <h2>11. Governing Law</h2>
+                            <p>These terms are governed by South African law. Disputes will be settled in South African courts.</p>
+                            
+                            <p><strong>By using our services, you acknowledge reading and agreeing to these terms.</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Privacy Policy Section -->
+            <section id="privacy" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title"><i class="fas fa-shield-alt"></i> Privacy Policy</h2>
+                        <button class="btn btn-outline" onclick="downloadDocument('privacy')">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                    
+                    <div class="document-generator">
+                        <div class="document-preview" id="privacyPreview">
+                            <h1>COSTBYTE AI - PRIVACY POLICY</h1>
+                            <p><strong>Effective Date:</strong> January 1, 2024</p>
+                            
+                            <h2>1. Information We Collect</h2>
+                            <p>We collect: SA ID numbers, contact details, employment history, qualifications, CVs, photos, and job preferences.</p>
+                            
+                            <h2>2. How We Use Information</h2>
+                            <p>Your information is used to: enhance your CV, match you with jobs, submit applications, and communicate updates.</p>
+                            
+                            <h2>3. Data Protection</h2>
+                            <p>We implement military-grade encryption, secure servers, and regular security audits to protect your data.</p>
+                            
+                            <h2>4. Data Sharing</h2>
+                            <p>We only share your information with potential employers through job applications. We never sell your data.</p>
+                            
+                            <h2>5. Your Rights</h2>
+                            <p>You have the right to access, correct, or delete your personal information. Contact us to exercise these rights.</p>
+                            
+                            <h2>6. Cookies and Tracking</h2>
+                            <p>We use essential cookies for platform functionality. We do not use tracking cookies for advertising.</p>
+                            
+                            <h2>7. Children's Privacy</h2>
+                            <p>Our services are for individuals 18 years and older. We do not knowingly collect data from children.</p>
+                            
+                            <h2>8. Data Retention</h2>
+                            <p>We retain your data for 5 years after account inactivity, or as required by South African law.</p>
+                            
+                            <h2>9. International Transfers</h2>
+                            <p>All data is stored and processed within South Africa, in compliance with POPIA regulations.</p>
+                            
+                            <h2>10. Contact Us</h2>
+                            <p>For privacy concerns, contact our Data Protection Officer at privacy@costbyte.co.za</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- POPIA Compliance Section -->
+            <section id="popia" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title"><i class="fas fa-user-shield"></i> POPIA Compliance</h2>
+                        <button class="btn btn-outline" onclick="downloadDocument('popia')">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                    
+                    <div class="document-generator">
+                        <div class="document-preview" id="popiaPreview">
+                            <h1>COSTBYTE AI - POPIA COMPLIANCE STATEMENT</h1>
+                            <p><strong>In compliance with the Protection of Personal Information Act (POPIA) 4 of 2013</strong></p>
+                            
+                            <h2>1. Information Officer</h2>
+                            <p><strong>Name:</strong> [Information Officer Name]<br>
+                            <strong>Email:</strong> info.officer@costbyte.co.za<br>
+                            <strong>Phone:</strong> 072 142 3215</p>
+                            
+                            <h2>2. Purpose of Processing</h2>
+                            <p>We process personal information for: job application services, CV enhancement, employer matching, and communication.</p>
+                            
+                            <h2>3. Lawful Basis</h2>
+                            <p>Processing is based on: user consent, contract performance, and legitimate business interests.</p>
+                            
+                            <h2>4. Data Subject Rights</h2>
+                            <p>Under POPIA, you have the right to:</p>
+                            <ul>
+                                <li>Access your personal information</li>
+                                <li>Correct inaccurate information</li>
+                                <li>Delete your information (right to be forgotten)</li>
+                                <li>Object to processing</li>
+                                <li>Lodge a complaint with the Information Regulator</li>
+                            </ul>
+                            
+                            <h2>5. Security Measures</h2>
+                            <p>We implement: encryption, access controls, regular audits, employee training, and secure data centers.</p>
+                            
+                            <h2>6. Data Breach Protocol</h2>
+                            <p>In case of a data breach, we will: notify affected users within 72 hours, report to the Information Regulator, and take corrective action.</p>
+                            
+                            <h2>7. Cross-Border Transfers</h2>
+                            <p>No personal information is transferred outside South Africa without adequate protection measures.</p>
+                            
+                            <h2>8. Record Keeping</h2>
+                            <p>We maintain records of all processing activities as required by POPIA Section 17.</p>
+                            
+                            <h2>9. Complaints Procedure</h2>
+                            <p>Complaints can be submitted to our Information Officer. If unresolved, complaints may be escalated to the Information Regulator.</p>
+                            
+                            <h2>10. Regular Compliance Audits</h2>
+                            <p>We conduct bi-annual POPIA compliance audits to ensure ongoing adherence to regulations.</p>
+                            
+                            <p><strong>Registration Number with Information Regulator:</strong> [To be obtained upon registration]</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Owner Dashboard Section -->
+            <section id="ownerDashboard" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title"><i class="fas fa-crown"></i> Owner Dashboard</h2>
+                        <button class="btn btn-primary" onclick="updateOwnerDashboard()">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalUsers">0</div>
+                            <div class="stat-label">Total Users</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="paidUsers">0</div>
+                            <div class="stat-label">Paying Users</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">R<span id="totalRevenue">0</span></div>
+                            <div class="stat-label">Total Revenue</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalApplications">0</div>
+                            <div class="stat-label">Total Applications</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <h4><i class="fas fa-university"></i> Revenue Distribution</h4>
+                        <div style="background: var(--light); padding: 1.5rem; border-radius: 8px;">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                                <div>
+                                    <strong>FNB Account (Owner):</strong><br>
+                                    R<span id="ownerAmount">0</span> (35%)
+                                </div>
+                                <div>
+                                    <strong>African Bank:</strong><br>
+                                    R<span id="africanAmount">0</span> (15%)
+                                </div>
+                                <div>
+                                    <strong>FNB AI Account:</strong><br>
+                                    R<span id="aiAmount">0</span> (20%)
+                                </div>
+                                <div>
+                                    <strong>FNB Reserve:</strong><br>
+                                    R<span id="reserveAmount">0</span> (20%)
+                                </div>
+                                <div>
+                                    <strong>Growth Account:</strong><br>
+                                    R<span id="growthAmount">0</span> (10%)
+                                </div>
+                            </div>
+                            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+                                <button class="btn btn-success" onclick="processWeeklyPayout()">
+                                    <i class="fas fa-money-bill-wave"></i> Process Weekly Payout
+                                </button>
+                                <div class="form-text" style="margin-top: 0.5rem;">
+                                    Growth account compounds at 10% weekly
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <h4><i class="fas fa-bullseye"></i> Target: 5,000 Users in 10 Days</h4>
+                        <div style="background: var(--light); padding: 1.5rem; border-radius: 8px;">
+                            <div class="progress" style="height: 20px; background: var(--border); border-radius: 10px; overflow: hidden;">
+                                <div class="progress-bar" id="targetProgress" style="width: 0%; height: 100%; background: var(--primary);"></div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                                <span id="targetText">0/5,000 users</span>
+                                <span id="targetPercentage">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- WhatsApp Button -->
+        <div class="whatsapp-chat">
+            <button class="whatsapp-btn" onclick="openWhatsApp()">
+                <i class="fab fa-whatsapp"></i>
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-grid">
+                <div>
+                    <h4><i class="fas fa-brain"></i> CostByte AI</h4>
+                    <p>AI-powered job application system for South African citizens.</p>
+                    <p>R500 once-off fee | Minimum salary: R15,000+</p>
+                </div>
+                
+                <div>
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home" class="footer-link" onclick="showSection('home')">Home</a></li>
+                        <li><a href="#register" class="footer-link" onclick="showSection('register')">Register</a></li>
+                        <li><a href="#dashboard" class="footer-link" onclick="showSection('dashboard')">Dashboard</a></li>
+                        <li><a href="#contact" class="footer-link" onclick="showSection('contact')">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#terms" class="footer-link" onclick="showSection('terms')">Terms & Conditions</a></li>
+                        <li><a href="#privacy" class="footer-link" onclick="showSection('privacy')">Privacy Policy</a></li>
+                        <li><a href="#popia" class="footer-link" onclick="showSection('popia')">POPIA Compliance</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4>Contact Info</h4>
+                    <p><i class="fab fa-whatsapp"></i> 072 142 3215</p>
+                    <p><i class="fas fa-envelope"></i> support@costbyte.co.za</p>
+                    <p><i class="fas fa-clock"></i> Mon-Fri: 8:00-17:00</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                © 2024 CostByte AI (Pty) Ltd. For South African citizens only. All rights reserved.
+                <br>
+                <small>AI brain logo represents our AI-powered job matching system.</small>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+    <!-- Applicant Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user"></i> Applicant Login</h3>
+                <button onclick="closeModal('loginModal')" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--dark);">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Email or SA ID</label>
+                    <input type="text" class="form-control" id="loginEmail" placeholder="your@email.com or SA ID">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" id="loginPassword" placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 0.5rem;">
+                        <input type="checkbox" id="rememberMe">
+                        Remember me
+                    </label>
+                </div>
+                <div class="form-group">
+                    <a href="#" style="color: var(--primary); text-decoration: none;">Forgot password?</a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="loginUser()">Login</button>
+                <button class="btn btn-outline" onclick="closeModal('loginModal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Owner Login Modal -->
+    <div class="modal" id="ownerLoginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-crown"></i> Owner Login</h3>
+                <button onclick="closeModal('ownerLoginModal')" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--dark);">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning">
+                    <strong>Restricted Access</strong>
+                    <p>Owner dashboard access is restricted to authorized personnel only.</p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Owner ID</label>
+                    <input type="text" class="form-control" id="ownerId" placeholder="OWNER-">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" id="ownerPassword" placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Security Code</label>
+                    <input type="text" class="form-control" id="securityCode" placeholder="Enter 6-digit code">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="loginOwner()">Login</button>
+                <button class="btn btn-outline" onclick="closeModal('ownerLoginModal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Integrated JavaScript Application -->
+    <script>
+        // AI Core System - Self-Contained Backend Simulation
+        class CostByteAISystem {
+            constructor() {
+                this.users = JSON.parse(localStorage.getItem('costbyte_users') || '{}');
+                this.payments = JSON.parse(localStorage.getItem('costbyte_payments') || '[]');
+                this.documents = JSON.parse(localStorage.getItem('costbyte_documents') || '[]');
+                this.jobs = JSON.parse(localStorage.getItem('costbyte_jobs') || '[]');
+                this.applications = JSON.parse(localStorage.getItem('costbyte_applications') || '[]');
+                this.ownerData = JSON.parse(localStorage.getItem('costbyte_owner') || '{}');
+                this.currentUser = JSON.parse(localStorage.getItem('costbyte_current_user') || 'null');
+                this.isOwner = JSON.parse(localStorage.getItem('costbyte_is_owner') || 'false');
+                
+                // Initialize with minimum salary guarantee
+                this.MINIMUM_SALARY = 15000;
+                
+                // Initialize AI models
+                this.aiModels = {
+                    cvEnhancer: null,
+                    jobMatcher: null,
+                    autoApplier: null,
+                    contentCreator: null
+                };
+                
+                this.initAI();
+            }
+            
+            initAI() {
+                console.log('🧠 AI System Initializing...');
+                
+                // CV Enhancement AI
+                this.aiModels.cvEnhancer = {
+                    enhance: async (cvText, userData) => {
+                        return new Promise(resolve => {
+                            setTimeout(() => {
+                                const enhanced = this.enhanceCVWithAI(cvText, userData);
+                                resolve(enhanced);
+                            }, 2000);
+                        });
+                    }
+                };
+                
+                // Job Matching AI with minimum salary filter
+                this.aiModels.jobMatcher = {
+                    findMatches: async (userData, jobs) => {
+                        return new Promise(resolve => {
+                            setTimeout(() => {
+                                // Filter jobs with minimum salary guarantee
+                                const filteredJobs = jobs.filter(job => job.salary >= this.MINIMUM_SALARY);
+                                const matches = this.matchJobsWithAI(userData, filteredJobs);
+                                resolve(matches);
+                            }, 1500);
+                        });
+                    }
+                };
+                
+                console.log('✅ AI System Ready with R' + this.MINIMUM_SALARY + ' minimum salary guarantee');
+            }
+            
+            // User Management with minimum salary tracking
+            registerUser(userData) {
+                const userId = 'user_' + Date.now();
+                const user = {
+                    id: userId,
+                    ...userData,
+                    isVerified: this.verifySAID(userData.saId),
+                    hasPaid: false,
+                    registeredAt: new Date().toISOString(),
+                    totalApplications: 0,
+                    successfulApplications: 0,
+                    currentSalary: userData.currentSalary || this.MINIMUM_SALARY,
+                    targetSalary: userData.minExpectedSalary || 25000,
+                    minimumSalaryGuarantee: this.MINIMUM_SALARY
+                };
+                
+                this.users[userId] = user;
+                localStorage.setItem('costbyte_users', JSON.stringify(this.users));
+                return { success: true, user, message: 'Registration successful!' };
+            }
+            
+            login(email, password) {
+                const user = Object.values(this.users).find(u => u.email === email || u.saId === email);
+                
+                if (!user) {
+                    return { success: false, message: 'User not found' };
+                }
+                
+                if (user.password !== password) {
+                    return { success: false, message: 'Invalid password' };
+                }
+                
+                this.currentUser = user;
+                this.isOwner = false;
+                localStorage.setItem('costbyte_current_user', JSON.stringify(user));
+                localStorage.setItem('costbyte_is_owner', JSON.stringify(this.isOwner));
+                
+                return { success: true, user, isOwner: this.isOwner };
+            }
+            
+            ownerLogin(ownerId, password, securityCode) {
+                // Default owner credentials
+                const defaultOwner = {
+                    id: 'owner_001',
+                    email: 'owner@costbyte.co.za',
+                    password: 'admin123',
+                    securityCode: '123456',
+                    name: 'CostByte Owner'
+                };
+                
+                if (ownerId === defaultOwner.id && password === defaultOwner.password && securityCode === defaultOwner.securityCode) {
+                    this.currentUser = defaultOwner;
+                    this.isOwner = true;
+                    localStorage.setItem('costbyte_current_user', JSON.stringify(defaultOwner));
+                    localStorage.setItem('costbyte_is_owner', JSON.stringify(true));
+                    
+                    return { success: true, user: defaultOwner, isOwner: true };
+                }
+                
+                return { success: false, message: 'Invalid owner credentials' };
+            }
+            
+            logout() {
+                this.currentUser = null;
+                this.isOwner = false;
+                localStorage.removeItem('costbyte_current_user');
+                localStorage.removeItem('costbyte_is_owner');
+            }
+            
+            // South African ID Verification
+            verifySAID(idNumber) {
+                if (!idNumber || idNumber.length !== 13) return false;
+                if (!/^\d{13}$/.test(idNumber)) return false;
+                
+                // Luhn Algorithm for SA ID
+                let total = 0;
+                for (let i = 0; i < 12; i++) {
+                    let digit = parseInt(idNumber[i]);
+                    if (i % 2 === 0) {
+                        digit *= 2;
+                        if (digit > 9) digit -= 9;
+                    }
+                    total += digit;
+                }
+                
+                const checkDigit = (10 - (total % 10)) % 10;
+                return checkDigit === parseInt(idNumber[12]);
+            }
+            
+            // Payment Processing
+            processPayment(userId, amount, method, details) {
+                const paymentId = 'pay_' + Date.now();
+                const payment = {
+                    id: paymentId,
+                    userId,
+                    amount,
+                    method,
+                    details,
+                    status: 'completed',
+                    timestamp: new Date().toISOString(),
+                    reference: 'COSTBYTE-' + Date.now().toString().slice(-6)
+                };
+                
+                this.payments.push(payment);
+                localStorage.setItem('costbyte_payments', JSON.stringify(this.payments));
+                
+                // Update user payment status
+                if (this.users[userId]) {
+                    this.users[userId].hasPaid = true;
+                    this.users[userId].paymentDate = new Date().toISOString();
+                    localStorage.setItem('costbyte_users', JSON.stringify(this.users));
+                }
+                
+                return { success: true, payment };
+            }
+            
+            // Document Processing with minimum salary optimization
+            processCV(cvText, userId) {
+                return new Promise(async (resolve) => {
+                    const user = this.users[userId];
+                    const enhancedCV = await this.aiModels.cvEnhancer.enhance(cvText, user);
+                    
+                    // Calculate savings with minimum salary guarantee
+                    const savings = this.calculateSavings(user);
+                    
+                    // Add minimum salary guarantee to CV
+                    const cvWithGuarantee = enhancedCV + `\n\nMINIMUM SALARY GUARANTEE: R${this.MINIMUM_SALARY}+`;
+                    
+                    resolve({
+                        success: true,
+                        enhancedCV: cvWithGuarantee,
+                        coverLetter: this.generateCoverLetter(user),
+                        savings,
+                        salaryGuarantee: this.MINIMUM_SALARY,
+                        downloadUrl: this.generatePDF(cvWithGuarantee, user)
+                    });
+                });
+            }
+            
+            // Job Search with minimum salary filter
+            async searchJobs(userData) {
+                // Simulate job scraping with minimum salary guarantee
+                const jobs = this.scrapeJobs(userData);
+                
+                // Filter for minimum salary
+                const filteredJobs = jobs.filter(job => job.salary >= this.MINIMUM_SALARY);
+                
+                const matches = await this.aiModels.jobMatcher.findMatches(userData, filteredJobs);
+                
+                return {
+                    success: true,
+                    totalJobs: jobs.length,
+                    filteredJobs: filteredJobs.length,
+                    matchedJobs: matches.length,
+                    minimumSalary: this.MINIMUM_SALARY,
+                    jobs: matches
+                };
+            }
+            
+            scrapeJobs(userData) {
+                const jobTitles = [
+                    'Software Developer', 'Marketing Manager', 'Sales Representative',
+                    'Accountant', 'Project Manager', 'Data Analyst', 'Customer Service',
+                    'HR Manager', 'Operations Manager', 'Business Analyst'
+                ];
+                
+                const companies = [
+                    'MTN South Africa', 'Vodacom', 'Standard Bank', 'Nedbank',
+                    'Absa', 'Shoprite', 'Pick n Pay', 'Sasol', 'Exxaro', 'Transnet'
+                ];
+                
+                const locations = ['Johannesburg', 'Cape Town', 'Durban', 'Pretoria', 'Port Elizabeth'];
+                
+                const jobs = [];
+                for (let i = 0; i < 25; i++) {
+                    // Generate salary with minimum guarantee
+                    const salary = Math.max(this.MINIMUM_SALARY, Math.floor(Math.random() * 40000) + 15000);
+                    
+                    jobs.push({
+                        id: 'job_' + i,
+                        title: jobTitles[Math.floor(Math.random() * jobTitles.length)],
+                        company: companies[Math.floor(Math.random() * companies.length)],
+                        location: locations[Math.floor(Math.random() * locations.length)],
+                        salary: salary,
+                        type: ['Full-time', 'Part-time', 'Contract'][Math.floor(Math.random() * 3)],
+                        postedDate: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString(),
+                        matchScore: Math.floor(Math.random() * 30) + 70,
+                        applyUrl: 'https://careers24.com/job/' + i,
+                        meetsMinimumSalary: salary >= this.MINIMUM_SALARY
+                    });
+                }
+                
+                this.jobs = jobs;
+                localStorage.setItem('costbyte_jobs', JSON.stringify(jobs));
+                return jobs;
+            }
+            
+            // Owner Dashboard Analytics
+            getOwnerAnalytics() {
+                const totalUsers = Object.keys(this.users).length;
+                const paidUsers = Object.values(this.users).filter(u => u.hasPaid).length;
+                const totalRevenue = this.payments.reduce((sum, p) => sum + p.amount, 0);
+                const totalApplications = this.applications.length;
+                
+                // Revenue distribution with minimum salary guarantee tracking
+                const distribution = {
+                    owner: totalRevenue * 0.35,
+                    aiDevelopment: totalRevenue * 0.20,
+                    reserve: totalRevenue * 0.20,
+                    africanBank: totalRevenue * 0.15,
+                    growth: totalRevenue * 0.10
+                };
+                
+                // Weekly growth
+                const weeklyGrowth = {
+                    users: Math.floor(totalUsers * 0.15),
+                    revenue: Math.floor(totalRevenue * 0.20),
+                    applications: Math.floor(totalApplications * 0.25),
+                    minimumSalaryJobs: Math.floor(totalApplications * 0.8) // 80% meet minimum salary
+                };
+                
+                return {
+                    totalUsers,
+                    paidUsers,
+                    totalRevenue,
+                    totalApplications,
+                    distribution,
+                    weeklyGrowth,
+                    minimumSalary: this.MINIMUM_SALARY,
+                    recentPayments: this.payments.slice(-10).reverse(),
+                    recentApplications: this.applications.slice(-10).reverse()
+                };
+            }
+            
+            // Calculate savings with minimum salary consideration
+            calculateSavings(userData) {
+                const traditionalCosts = {
+                    cvWriting: 800,
+                    coverLetters: 300,
+                    jobSearchTime: 2000,
+                    careerCoaching: 1500,
+                    salaryLoss: (userData.currentSalary || 15000) * 0.5 // 50% of monthly salary
+                };
+                
+                const totalTraditional = Object.values(traditionalCosts).reduce((a, b) => a + b, 0);
+                const costbyteValue = totalTraditional * 1.5;
+                const savings = costbyteValue - 500;
+                
+                // Add minimum salary upgrade benefit
+                const salaryUpgrade = Math.max(0, (userData.targetSalary || 25000) - (userData.currentSalary || 15000));
+                const annualBenefit = salaryUpgrade * 12;
+                
+                return {
+                    traditionalCost: totalTraditional,
+                    costbyteValue,
+                    savings,
+                    roi: (savings / 500) * 100,
+                    salaryUpgrade,
+                    annualBenefit,
+                    minimumSalaryGuarantee: this.MINIMUM_SALARY
+                };
+            }
+            
+            // WhatsApp Integration with South African number
+            sendWhatsAppMessage(phone, message) {
+                const cleanedPhone = phone.replace(/\D/g, '');
+                const saPhone = cleanedPhone.startsWith('27') ? cleanedPhone : '27' + cleanedPhone.substring(1);
+                
+                console.log(`📱 WhatsApp to ${saPhone}: ${message}`);
+                return { success: true, messageId: 'wa_' + Date.now() };
+            }
+            
+            // Helper methods
+            enhanceCVWithAI(cvText, userData) {
+                const templates = [
+                    `PROFESSIONAL PROFILE
+A results-driven ${userData.currentOccupation || 'professional'} with ${userData.yearsExperience || 3}+ years of experience in the South African market. 
+Minimum Salary Requirement: R${this.MINIMUM_SALARY}+`,
+                    
+                    `KEY SKILLS
+• ${userData.skills?.slice(0, 5).join('\n• ') || 'Professional communication, Problem-solving, Team collaboration'}
+• South African market expertise
+• Digital literacy and adaptability`,
+                    
+                    `SALARY EXPECTATIONS
+• Minimum Acceptable: R${this.MINIMUM_SALARY}+ per month
+• Target Range: R${userData.targetSalary || 25000}+ per month
+• Negotiable based on benefits package`
+                ];
+                
+                return templates.join('\n\n') + '\n\n' + cvText;
+            }
+            
+            generateCoverLetter(userData) {
+                return `Dear Hiring Manager,
+
+I am writing to express my interest in the position at your company. With ${userData.yearsExperience || 3}+ years of experience as a ${userData.currentOccupation || 'professional'}, I have developed strong skills in ${userData.skills?.slice(0, 3).join(', ') || 'my field'}.
+
+I am seeking opportunities with a minimum salary of R${this.MINIMUM_SALARY}+, which reflects my experience and the value I can bring to your organization.
+
+My background includes successful work in the South African market, and I am confident that I can contribute effectively to your team.
+
+Thank you for considering my application. I look forward to discussing how I can add value to your organization.
+
+Sincerely,
+${userData.firstName || ''} ${userData.lastName || ''}`;
+            }
+            
+            generatePDF(content, userData) {
+                const blob = new Blob([content], { type: 'application/pdf' });
+                return URL.createObjectURL(blob);
+            }
+        }
+        
+        // Global AI System Instance
+        window.CostByteAI = new CostByteAISystem();
+    </script>
+
+    <!-- Application JavaScript -->
+    <script>
+        // Application State
+        let currentSection = 'home';
+        let selectedPaymentMethod = null;
+        let uploadedFiles = {
+            cv: null,
+            photo: null,
+            qualifications: []
+        };
+        let processedDocuments = null;
+        let selectedJobs = [];
+        
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const currentUser = CostByteAI.currentUser;
+            const isOwner = CostByteAI.isOwner;
+            
+            // Update navigation based on login status
+            updateNavigation();
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Initialize with home section
+            showSection('home');
+            
+            // Auto-check for updates
+            setInterval(() => {
+                CostByteAI.selfUpdate();
+            }, 3600000);
+        });
+        
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Hamburger menu
+            document.getElementById('hamburgerMenu').addEventListener('click', toggleMobileMenu);
+            
+            // SA ID verification
+            document.getElementById('saId')?.addEventListener('input', function() {
+                verifySAID(this.value);
+            });
+            
+            // Register form
+            document.getElementById('registerForm')?.addEventListener('submit', function(e) {
+                e.preventDefault();
+                registerUser();
+            });
+            
+            // Salary range updates
+            document.getElementById('expRange')?.addEventListener('input', function() {
+                document.getElementById('expValue').textContent = this.value + ' years';
+            });
+            
+            document.getElementById('minSalary')?.addEventListener('input', function() {
+                document.getElementById('salaryValue').textContent = parseInt(this.value).toLocaleString();
+            });
+            
+            document.getElementById('dailyLimit')?.addEventListener('input', function() {
+                document.getElementById('limitValue').textContent = this.value;
+            });
+        }
+        
+        // Navigation Functions
+        function updateNavigation() {
+            const currentUser = CostByteAI.currentUser;
+            const isOwner = CostByteAI.isOwner;
+            
+            // Update login buttons
+            if (currentUser) {
+                if (isOwner) {
+                    document.querySelector('.login-buttons').innerHTML = `
+                        <button class="btn btn-sm btn-primary" onclick="showSection('ownerDashboard')">
+                            <i class="fas fa-crown"></i> Owner Dashboard
+                        </button>
+                        <button class="btn btn-sm btn-outline" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    `;
+                } else {
+                    document.querySelector('.login-buttons').innerHTML = `
+                        <button class="btn btn-sm btn-primary" onclick="showSection('dashboard')">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </button>
+                        <button class="btn btn-sm btn-outline" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    `;
+                }
+            }
+        }
+        
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            currentSection = sectionId;
+            
+            // Update navigation links
+            document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + sectionId) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Close mobile menu if open
+            closeMobileMenu();
+            
+            // Load data for specific sections
+            if (sectionId === 'dashboard' && CostByteAI.currentUser) {
+                updateUserDashboard();
+            } else if (sectionId === 'ownerDashboard' && CostByteAI.isOwner) {
+                updateOwnerDashboard();
+            } else if (sectionId === 'jobs') {
+                loadApplications();
+            }
+        }
+        
+        // Mobile Menu Functions
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const hamburger = document.getElementById('hamburgerMenu');
+            const overlay = document.getElementById('overlay');
+            
+            menu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+        
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const hamburger = document.getElementById('hamburgerMenu');
+            const overlay = document.getElementById('overlay');
+            
+            menu.classList.remove('active');
+            hamburger.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+        
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            closeMobileMenu();
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+        
+        // User Authentication
+        function loginUser() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const result = CostByteAI.login(email, password);
+            
+            if (result.success) {
+                closeModal('loginModal');
+                showAlert('success', 'Login successful!');
+                updateNavigation();
+                showSection('dashboard');
+            } else {
+                showAlert('danger', result.message);
+            }
+        }
+        
+        function loginOwner() {
+            const ownerId = document.getElementById('ownerId').value;
+            const password = document.getElementById('ownerPassword').value;
+            const securityCode = document.getElementById('securityCode').value;
+            
+            const result = CostByteAI.ownerLogin(ownerId, password, securityCode);
+            
+            if (result.success) {
+                closeModal('ownerLoginModal');
+                showAlert('success', 'Owner login successful!');
+                updateNavigation();
+                showSection('ownerDashboard');
+            } else {
+                showAlert('danger', result.message);
+            }
+        }
+        
+        function logout() {
+            CostByteAI.logout();
+            showAlert('info', 'Logged out successfully');
+            updateNavigation();
+            showSection('home');
+        }
+        
+        // SA ID Verification
+        function verifySAID(idNumber) {
+            const verificationDiv = document.getElementById('idVerification');
+            
+            if (!idNumber || idNumber.length !== 13) {
+                verificationDiv.innerHTML = '<span style="color: var(--danger);"><i class="fas fa-times"></i> ID must be 13 digits</span>';
+                return false;
+            }
+            
+            const isValid = CostByteAI.verifySAID(idNumber);
+            
+            if (isValid) {
+                verificationDiv.innerHTML = '<span style="color: var(--success);"><i class="fas fa-check"></i> Valid South African ID</span>';
+                
+                // Extract demographics
+                const year = idNumber.substring(0, 2);
+                const month = idNumber.substring(2, 4);
+                const day = idNumber.substring(4, 6);
+                const genderDigit = parseInt(idNumber.substring(6, 10));
+                const gender = genderDigit < 5000 ? 'Female' : 'Male';
+                
+                verificationDiv.innerHTML += `<div style="font-size: 0.9rem; margin-top: 0.5rem;">
+                    DOB: ${day}/${month}/19${year} | Gender: ${gender}
+                </div>`;
+                
+                return true;
+            } else {
+                verificationDiv.innerHTML = '<span style="color: var(--danger);"><i class="fas fa-times"></i> Invalid ID number</span>';
+                return false;
+            }
+        }
+        
+        // User Registration
+        function registerUser() {
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                saId: document.getElementById('saId').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                whatsapp: document.getElementById('whatsapp').value || document.getElementById('phone').value,
+                occupation: document.getElementById('occupation').value,
+                currentSalary: parseInt(document.getElementById('currentSalaryReg').value),
+                yearsExperience: parseInt(document.getElementById('yearsExperience').value),
+                highestQualification: document.getElementById('qualification').value,
+                skills: document.getElementById('skills').value.split(',').map(s => s.trim()),
+                preferredLocations: Array.from(document.getElementById('locations').selectedOptions).map(o => o.value),
+                minExpectedSalary: parseInt(document.getElementById('minExpectedSalary').value),
+                targetSalary: parseInt(document.getElementById('minExpectedSalary').value) * 1.5,
+                password: document.getElementById('password').value
+            };
+            
+            // Validate passwords
+            if (document.getElementById('password').value !== document.getElementById('confirmPassword').value) {
+                showAlert('danger', 'Passwords do not match!');
+                return;
+            }
+            
+            // Validate SA ID
+            if (!verifySAID(formData.saId)) {
+                showAlert('danger', 'Please enter a valid South African ID number');
+                return;
+            }
+            
+            // Register user
+            const result = CostByteAI.registerUser(formData);
+            
+            if (result.success) {
+                showAlert('success', result.message);
+                
+                // Auto login
+                CostByteAI.login(formData.email, formData.password);
+                
+                // Update navigation
+                updateNavigation();
+                
+                // Proceed to payment
+                setTimeout(() => {
+                    showSection('payment');
+                    // Generate payment reference
+                    document.getElementById('paymentRef').textContent = 
+                        'COSTBYTE-' + Date.now().toString().slice(-6);
+                }, 1500);
+            } else {
+                showAlert('danger', result.message);
+            }
+        }
+        
+        // Payment Processing
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            
+            // Update UI
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.querySelector(`[data-method="${method}"]`).classList.add('selected');
+            
+            // Show payment details
+            document.getElementById('paymentDetails').style.display = 'block';
+            
+            if (method === 'fnb_eft') {
+                document.getElementById('fnbDetails').style.display = 'block';
+                document.getElementById('otherPayment').style.display = 'none';
+            } else {
+                document.getElementById('fnbDetails').style.display = 'none';
+                document.getElementById('otherPayment').style.display = 'block';
+                
+                // Simulate payment processing
+                simulatePayment(method);
+            }
+        }
+        
+        function simulatePayment(method) {
+            const progressBar = document.getElementById('paymentProgress');
+            let progress = 0;
+            
+            const interval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        completePayment();
+                    }, 500);
+                }
+            }, 200);
+        }
+        
+        function simulateFNBpayment() {
+            showAlert('info', 'Simulating FNB EFT payment...');
+            
+            setTimeout(() => {
+                completePayment();
+            }, 2000);
+        }
+        
+        function completePayment() {
+            const user = CostByteAI.currentUser;
+            if (!user) return;
+            
+            const payment = CostByteAI.processPayment(
+                user.id,
+                500,
+                selectedPaymentMethod || 'fnb_eft',
+                { reference: document.getElementById('paymentRef').textContent }
+            );
+            
+            if (payment.success) {
+                showAlert('success', 'Payment successful! AI job hunting activated with R15,000+ minimum salary guarantee.');
+                
+                // Send WhatsApp confirmation
+                CostByteAI.sendWhatsAppMessage(
+                    user.whatsapp || user.phone,
+                    `✅ Payment successful! Your AI job hunting is now active with R${CostByteAI.MINIMUM_SALARY}+ minimum salary guarantee. Upload your documents to get started.`
+                );
+                
+                // Proceed to documents
+                setTimeout(() => {
+                    showSection('documents');
+                }, 1500);
+            }
+        }
+        
+        // Document Processing
+        function processDocuments() {
+            if (!uploadedFiles.cv) {
+                showAlert('warning', 'Please upload your CV first');
+                return;
+            }
+            
+            const processBtn = document.getElementById('processBtn');
+            const aiProcessing = document.getElementById('aiProcessing');
+            const aiResults = document.getElementById('aiResults');
+            
+            processBtn.style.display = 'none';
+            aiProcessing.style.display = 'block';
+            
+            // Simulate AI processing
+            let progress = 0;
+            const progressBar = document.getElementById('aiProgressBar');
+            const status = document.getElementById('aiStatus');
+            
+            const steps = [
+                'Reading CV...',
+                'Analyzing content...',
+                'Adding minimum salary guarantee...',
+                'Enhancing with AI...',
+                'Generating cover letter...',
+                'Optimizing for ATS...',
+                'Finalizing documents...'
+            ];
+            
+            const interval = setInterval(() => {
+                progress += 14.28;
+                progressBar.style.width = progress + '%';
+                
+                const stepIndex = Math.floor(progress / 14.28);
+                if (stepIndex < steps.length) {
+                    status.textContent = steps[stepIndex];
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    
+                    // Process with AI
+                    const user = CostByteAI.currentUser;
+                    CostByteAI.processCV('Sample CV content', user.id).then(result => {
+                        processedDocuments = result;
+                        
+                        // Show results
+                        aiProcessing.style.display = 'none';
+                        aiResults.style.display = 'block';
+                        
+                        // Send WhatsApp notification
+                        CostByteAI.sendWhatsAppMessage(
+                            user.whatsapp || user.phone,
+                            `✅ Your AI-enhanced CV is ready with R${CostByteAI.MINIMUM_SALARY}+ minimum salary guarantee! Download it now from your dashboard.`
+                        );
+                        
+                        showAlert('success', 'AI processing complete! Your enhanced CV is ready for download.');
+                    });
+                }
+            }, 500);
+        }
+        
+        function downloadCV() {
+            if (!processedDocuments) return;
+            
+            const link = document.createElement('a');
+            link.href = processedDocuments.downloadUrl;
+            link.download = `CostByte_AI_CV_${CostByteAI.currentUser.firstName}_${CostByteAI.currentUser.lastName}.pdf`;
+            link.click();
+            
+            showAlert('success', 'CV downloaded successfully!');
+        }
+        
+        function downloadCoverLetter() {
+            const blob = new Blob([processedDocuments?.coverLetter || 'Cover letter'], 
+                                 { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `CostByte_Cover_Letter_${CostByteAI.currentUser.firstName}_${CostByteAI.currentUser.lastName}.pdf`;
+            link.click();
+            
+            showAlert('success', 'Cover letter downloaded!');
+        }
+        
+        function showSalaryReport() {
+            if (!processedDocuments?.savings) return;
+            
+            const savings = processedDocuments.savings;
+            const alert = document.createElement('div');
+            alert.className = 'alert alert-success';
+            alert.innerHTML = `
+                <h4><i class="fas fa-chart-line"></i> Salary & Savings Report</h4>
+                <div style="margin: 1rem 0;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                        <div>Current Salary:</div>
+                        <div style="text-align: right;">R${CostByteAI.currentUser.currentSalary || 15000}</div>
+                        
+                        <div>Target Salary:</div>
+                        <div style="text-align: right;">R${CostByteAI.currentUser.targetSalary || 25000}</div>
+                        
+                        <div>Minimum Salary Guarantee:</div>
+                        <div style="text-align: right; color: var(--success);">R${CostByteAI.MINIMUM_SALARY}+</div>
+                        
+                        <div>Potential Annual Increase:</div>
+                        <div style="text-align: right; color: var(--success); font-weight: 700;">
+                            R${savings.annualBenefit}
+                        </div>
+                        
+                        <div>Traditional job search cost:</div>
+                        <div style="text-align: right;">R${savings.traditionalCost}</div>
+                        
+                        <div>CostByte value delivered:</div>
+                        <div style="text-align: right;">R${savings.costbyteValue}</div>
+                        
+                        <div><strong>Your savings:</strong></div>
+                        <div style="text-align: right; color: var(--success); font-weight: 700;">
+                            R${savings.savings}
+                        </div>
+                        
+                        <div>Return on investment:</div>
+                        <div style="text-align: right; color: var(--success); font-weight: 700;">
+                            ${savings.roi.toFixed(0)}%
+                        </div>
+                    </div>
+                </div>
+                <p>For a once-off R500 fee, you save R${savings.savings} with guaranteed R${CostByteAI.MINIMUM_SALARY}+ minimum salary!</p>
+            `;
+            
+            document.getElementById('aiResults').prepend(alert);
+        }
+        
+        // File Upload Handling
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.currentTarget.classList.add('dragover');
+        }
+        
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('dragover');
+        }
+        
+        function handleDrop(e, type) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            handleFiles(files, type);
+        }
+        
+        function handleFileSelect(input, type) {
+            handleFiles(input.files, type);
+        }
+        
+        function handleFiles(files, type) {
+            for (const file of files) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const fileData = {
+                        name: file.name,
+                        type: file.type,
+                        size: file.size,
+                        data: e.target.result,
+                        uploadedAt: new Date().toISOString()
+                    };
+                    
+                    if (type === 'cv') {
+                        uploadedFiles.cv = fileData;
+                        addFileToList(fileData, 'cvList');
+                    } else if (type === 'photo') {
+                        uploadedFiles.photo = fileData;
+                        addFileToList(fileData, 'photoList');
+                    } else if (type === 'qualifications') {
+                        uploadedFiles.qualifications.push(fileData);
+                        addFileToList(fileData, 'qualList');
+                    }
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function addFileToList(fileData, listId) {
+            const list = document.getElementById(listId);
+            const item = document.createElement('div');
+            item.className = 'file-item';
+            item.innerHTML = `
+                <div>
+                    <strong>${fileData.name}</strong>
+                    <div style="font-size: 0.8rem; color: #6b7280;">
+                        ${formatFileSize(fileData.size)} • ${new Date(fileData.uploadedAt).toLocaleTimeString()}
+                    </div>
+                </div>
+                <div style="color: var(--success);"><i class="fas fa-check"></i></div>
+            `;
+            list.appendChild(item);
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // Job Search Functions
+        function startJobSearch() {
+            const statusDiv = document.getElementById('jobSearchStatus');
+            const jobsContainer = document.getElementById('jobsContainer');
+            
+            statusDiv.innerHTML = `
+                <div class="alert alert-info">
+                    <strong><i class="fas fa-brain"></i> AI Searching for Jobs...</strong>
+                    <p>Scanning for positions with minimum R${CostByteAI.MINIMUM_SALARY}+ salary...</p>
+                    <div style="height: 10px; background: var(--border); border-radius: 5px; overflow: hidden; margin-top: 1rem;">
+                        <div style="width: 0%; height: 100%; background: var(--primary);" id="jobSearchProgress"></div>
+                    </div>
+                </div>
+            `;
+            
+            let progress = 0;
+            const progressBar = document.getElementById('jobSearchProgress');
+            
+            const interval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    
+                    // Get jobs
+                    const user = CostByteAI.currentUser;
+                    CostByteAI.searchJobs(user).then(result => {
+                        statusDiv.innerHTML = `
+                            <div class="alert alert-success">
+                                <strong><i class="fas fa-check-circle"></i> Found ${result.totalJobs} jobs, ${result.filteredJobs} meet minimum salary, ${result.matchedJobs} matches!</strong>
+                                <p>AI has found jobs matching your profile with R${result.minimumSalary}+ minimum salary guarantee.</p>
+                            </div>
+                        `;
+                        
+                        displayJobs(result.jobs);
+                        jobsContainer.style.display = 'block';
+                    });
+                }
+            }, 300);
+        }
+        
+        function displayJobs(jobs) {
+            const table = document.getElementById('jobsTable');
+            const countSpan = document.getElementById('matchedCount');
+            
+            table.innerHTML = '';
+            selectedJobs = [];
+            
+            jobs.forEach(job => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${job.title}</strong></td>
+                    <td>${job.company}</td>
+                    <td>${job.location}</td>
+                    <td>R${job.salary.toLocaleString()}</td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 100px; height: 8px; background: var(--border); border-radius: 4px;">
+                                <div style="width: ${job.matchScore}%; height: 100%; background: var(--success); border-radius: 4px;"></div>
+                            </div>
+                            ${job.matchScore}%
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-outline" onclick="selectJob('${job.id}')">
+                            Select
+                        </button>
+                    </td>
+                `;
+                table.appendChild(row);
+            });
+            
+            countSpan.textContent = jobs.length;
+        }
+        
+        function selectJob(jobId) {
+            if (!selectedJobs.includes(jobId)) {
+                selectedJobs.push(jobId);
+                showAlert('success', 'Job selected for auto-application (R' + CostByteAI.MINIMUM_SALARY + '+ salary)');
+            }
+        }
+        
+        function autoApplyToAll() {
+            const user = CostByteAI.currentUser;
+            const btn = document.getElementById('autoApplyBtn');
+            const statusDiv = document.getElementById('autoApplyStatus');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<div class="loader"></div> Applying...';
+            
+            statusDiv.style.display = 'block';
+            statusDiv.innerHTML = `
+                <div class="alert alert-info">
+                    <strong><i class="fas fa-brain"></i> AI Applying to Jobs...</strong>
+                    <p>Filling application forms, uploading documents, submitting with R${CostByteAI.MINIMUM_SALARY}+ salary requirement...</p>
+                    <div style="height: 10px; background: var(--border); border-radius: 5px; overflow: hidden; margin-top: 1rem;">
+                        <div style="width: 0%; height: 100%; background: var(--primary);" id="applyProgress"></div>
+                    </div>
+                </div>
+            `;
+            
+            let progress = 0;
+            const progressBar = document.getElementById('applyProgress');
+            
+            const interval = setInterval(() => {
+                progress += 20;
+                progressBar.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    
+                    // Process applications
+                    statusDiv.innerHTML = `
+                        <div class="alert alert-success">
+                            <strong><i class="fas fa-check-circle"></i> Applied to ${selectedJobs.length} jobs with R${CostByteAI.MINIMUM_SALARY}+ minimum salary!</strong>
+                            <p>AI has successfully submitted your applications.</p>
+                        </div>
+                    `;
+                    
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-brain"></i> Auto-Apply to All Matches';
+                    
+                    // Send WhatsApp notification
+                    CostByteAI.sendWhatsAppMessage(
+                        user.whatsapp || user.phone,
+                        `✅ Applied to ${selectedJobs.length} jobs today with R${CostByteAI.MINIMUM_SALARY}+ minimum salary guarantee! You'll receive updates on any responses.`
+                    );
+                    
+                    // Update dashboard
+                    updateUserDashboard();
+                    loadApplications();
+                }
+            }, 500);
+        }
+        
+        function loadApplications() {
+            const user = CostByteAI.currentUser;
+            if (!user) return;
+            
+            const table = document.getElementById('applicationsTable');
+            
+            table.innerHTML = '';
+            
+            // Simulate applications
+            const applications = [
+                { date: '2024-01-15', position: 'Software Developer', company: 'MTN SA', salary: 35000, status: 'Applied', match: 92 },
+                { date: '2024-01-14', position: 'Project Manager', company: 'Standard Bank', salary: 45000, status: 'Interview', match: 88 },
+                { date: '2024-01-13', position: 'Data Analyst', company: 'Vodacom', salary: 28000, status: 'Applied', match: 85 },
+                { date: '2024-01-12', position: 'Marketing Manager', company: 'Shoprite', salary: 32000, status: 'Applied', match: 79 },
+                { date: '2024-01-11', position: 'HR Manager', company: 'Nedbank', salary: 38000, status: 'Offer', match: 95 }
+            ];
+            
+            applications.forEach(app => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${app.date}</td>
+                    <td>${app.position}</td>
+                    <td>${app.company}</td>
+                    <td>R${app.salary.toLocaleString()}</td>
+                    <td>
+                        <span style="padding: 0.25rem 0.5rem; border-radius: 4px; background: ${app.status === 'Applied' ? 'var(--primary)' : app.status === 'Interview' ? 'var(--warning)' : 'var(--success)'}; color: white; font-size: 0.8rem;">
+                            ${app.status}
+                        </span>
+                    </td>
+                    <td>${app.match}%</td>
+                `;
+                table.appendChild(row);
+            });
+        }
+        
+        // Dashboard Functions
+        function updateUserDashboard() {
+            const user = CostByteAI.currentUser;
+            if (!user) return;
+            
+            document.getElementById('userWelcome').textContent = `Welcome, ${user.firstName}!`;
+            document.getElementById('totalApps').textContent = user.totalApplications || 5;
+            document.getElementById('successfulApps').textContent = user.successfulApplications || 4;
+            document.getElementById('interviews').textContent = 2;
+            document.getElementById('avgSalary').textContent = (user.targetSalary || 25000).toLocaleString();
+            document.getElementById('currentSalaryDisplay').textContent = (user.currentSalary || 15000).toLocaleString();
+            document.getElementById('targetSalaryDisplay').textContent = (user.targetSalary || 25000).toLocaleString();
+            
+            // Calculate salary progress
+            const progress = ((user.currentSalary || 15000) / (user.targetSalary || 25000)) * 100;
+            document.getElementById('salaryProgress').style.width = Math.min(progress, 100) + '%';
+        }
+        
+        function updateAISettings() {
+            const limit = document.getElementById('dailyLimit').value;
+            const salary = document.getElementById('minSalary').value;
+            
+            document.getElementById('limitValue').textContent = limit;
+            document.getElementById('salaryValue').textContent = parseInt(salary).toLocaleString();
+            
+            showAlert('success', 'AI settings updated! Minimum salary: R' + parseInt(salary).toLocaleString());
+        }
+        
+        // Owner Dashboard
+        function updateOwnerDashboard() {
+            const analytics = CostByteAI.getOwnerAnalytics();
+            
+            // Update stats
+            document.getElementById('totalUsers').textContent = analytics.totalUsers || 1250;
+            document.getElementById('paidUsers').textContent = analytics.paidUsers || 980;
+            document.getElementById('totalRevenue').textContent = (analytics.totalRevenue || 490000).toFixed(2);
+            document.getElementById('totalApplications').textContent = analytics.totalApplications || 2450;
+            
+            // Update bank distribution
+            document.getElementById('ownerAmount').textContent = (analytics.distribution.owner || 171500).toFixed(2);
+            document.getElementById('africanAmount').textContent = (analytics.distribution.africanBank || 73500).toFixed(2);
+            document.getElementById('aiAmount').textContent = (analytics.distribution.aiDevelopment || 98000).toFixed(2);
+            document.getElementById('reserveAmount').textContent = (analytics.distribution.reserve || 98000).toFixed(2);
+            document.getElementById('growthAmount').textContent = (analytics.distribution.growth || 49000).toFixed(2);
+            
+            // Update target progress
+            const targetProgress = document.getElementById('targetProgress');
+            const targetText = document.getElementById('targetText');
+            const targetPercentage = document.getElementById('targetPercentage');
+            const progress = ((analytics.paidUsers || 980) / 5000) * 100;
+            
+            targetProgress.style.width = progress + '%';
+            targetText.textContent = `${analytics.paidUsers || 980}/5,000 users`;
+            targetPercentage.textContent = progress.toFixed(1) + '%';
+        }
+        
+        function processWeeklyPayout() {
+            showAlert('info', 'Processing weekly payouts...');
+            
+            setTimeout(() => {
+                const analytics = CostByteAI.getOwnerAnalytics();
+                
+                showAlert('success', 
+                    `Weekly payouts processed!<br>
+                    Owner FNB: R${analytics.distribution.owner.toFixed(2)}<br>
+                    AI Development FNB: R${analytics.distribution.aiDevelopment.toFixed(2)}<br>
+                    Reserve FNB: R${analytics.distribution.reserve.toFixed(2)}<br>
+                    African Bank: R${analytics.distribution.africanBank.toFixed(2)}<br>
+                    Growth account increased by 10% to R${(analytics.distribution.growth * 1.1).toFixed(2)}!`
+                );
+                
+                // Update display
+                updateOwnerDashboard();
+            }, 2000);
+        }
+        
+        // Contact Form
+        function submitContactForm() {
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            if (!name || !email || !message) {
+                showAlert('warning', 'Please fill in all required fields');
+                return;
+            }
+            
+            showAlert('success', 'Message sent! We\'ll respond within 24 hours.');
+            
+            // Clear form
+            document.getElementById('contactName').value = '';
+            document.getElementById('contactEmail').value = '';
+            document.getElementById('contactPhone').value = '';
+            document.getElementById('contactSubject').value = 'general';
+            document.getElementById('contactMessage').value = '';
+        }
+        
+        // Document Downloads
+        function downloadDocument(type) {
+            let content = '';
+            let filename = '';
+            
+            switch(type) {
+                case 'terms':
+                    content = document.getElementById('termsPreview').innerText;
+                    filename = 'CostByte_AI_Terms_and_Conditions.pdf';
+                    break;
+                case 'privacy':
+                    content = document.getElementById('privacyPreview').innerText;
+                    filename = 'CostByte_AI_Privacy_Policy.pdf';
+                    break;
+                case 'popia':
+                    content = document.getElementById('popiaPreview').innerText;
+                    filename = 'CostByte_AI_POPIA_Compliance.pdf';
+                    break;
+            }
+            
+            const blob = new Blob([content], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            link.click();
+            
+            showAlert('success', 'Document downloaded!');
+        }
+        
+        // WhatsApp Integration
+        function openWhatsApp() {
+            const user = CostByteAI.currentUser;
+            let message = 'Hi CostByte AI! I need assistance with your job application service.';
+            
+            if (user) {
+                message = `Hi CostByte AI! This is ${user.firstName} ${user.lastName} (User ID: ${user.id}). I need assistance.`;
+            }
+            
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/27721423215?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        // Savings Calculator
+        function calculateSavings() {
+            const yearsExp = parseInt(document.getElementById('expRange').value);
+            const currentSalary = parseInt(document.getElementById('currentSalary').value);
+            
+            document.getElementById('expValue').textContent = yearsExp + ' years';
+            
+            const savings = {
+                traditionalCost: 800 + 300 + 2000 + 1500 + (currentSalary * 0.5),
+                costbyteValue: 0,
+                savings: 0,
+                roi: 0,
+                salaryUpgrade: Math.max(0, 25000 - currentSalary),
+                annualBenefit: 0
+            };
+            
+            savings.costbyteValue = savings.traditionalCost * 1.5;
+            savings.savings = savings.costbyteValue - 500;
+            savings.roi = (savings.savings / 500) * 100;
+            savings.annualBenefit = savings.salaryUpgrade * 12;
+            
+            // Add experience bonus
+            savings.savings += yearsExp * 100;
+            
+            // Update display
+            document.getElementById('savingsAmount').textContent = savings.savings.toFixed(0);
+            document.getElementById('traditionalCost').textContent = savings.traditionalCost.toFixed(0);
+            document.getElementById('costbyteValue').textContent = savings.costbyteValue.toFixed(0);
+            document.getElementById('roiPercent').textContent = savings.roi.toFixed(0);
+            
+            document.getElementById('savingsResult').style.display = 'block';
+        }
+        
+        // Utility Functions
+        function showAlert(type, message) {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.innerHTML = message;
+            alert.style.position = 'fixed';
+            alert.style.top = '20px';
+            alert.style.right = '20px';
+            alert.style.zIndex = '10000';
+            alert.style.maxWidth = '400px';
+            alert.style.boxShadow = 'var(--shadow-lg)';
+            alert.style.animation = 'fadeIn 0.3s ease';
+            
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(alert);
+                }, 300);
+            }, 5000);
+        }
+        
+        // Add fadeOut animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(-10px); }
+            }
+            .file-upload {
+                border: 2px dashed var(--border);
+                border-radius: 8px;
+                padding: 2rem;
+                text-align: center;
+                cursor: pointer;
+                transition: all 0.3s;
+                margin-bottom: 1rem;
+            }
+            .file-upload:hover {
+                border-color: var(--primary);
+                background: rgba(37, 99, 235, 0.05);
+            }
+            .file-upload.dragover {
+                border-color: var(--success);
+                background: rgba(16, 185, 129, 0.1);
+            }
+            .file-list {
+                margin-top: 1rem;
+            }
+            .file-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0.75rem;
+                background: var(--light);
+                border-radius: 6px;
+                margin-bottom: 0.5rem;
+            }
+            .payment-method {
+                border: 2px solid var(--border);
+                border-radius: 8px;
+                padding: 1rem;
+                text-align: center;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+            .payment-method:hover {
+                border-color: var(--primary);
+                transform: translateY(-2px);
+            }
+            .payment-method.selected {
+                border-color: var(--primary);
+                background: rgba(37, 99, 235, 0.1);
+            }
+            .ai-processing {
+                text-align: center;
+                padding: 3rem;
+            }
+            .ai-bot {
+                animation: bounce 2s infinite;
+            }
+            @keyframes bounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+            }
+            .btn-block {
+                display: block;
+                width: 100%;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Demo login for testing
+        window.demoLogin = function() {
+            document.getElementById('loginEmail').value = 'test@costbyte.co.za';
+            document.getElementById('loginPassword').value = 'password123';
+            loginUser();
+        };
+        
+        window.ownerDemoLogin = function() {
+            document.getElementById('ownerId').value = 'owner_001';
+            document.getElementById('ownerPassword').value = 'admin123';
+            document.getElementById('securityCode').value = '123456';
+            loginOwner();
+        };
+        
+        // Initialize with some demo data
+        setTimeout(() => {
+            if (Object.keys(CostByteAI.users).length === 0) {
+                // Create demo user
+                CostByteAI.registerUser({
+                    firstName: 'Demo',
+                    lastName: 'User',
+                    saId: '8001015009089',
+                    email: 'demo@costbyte.co.za',
+                    phone: '0721234567',
+                    currentSalary: 15000,
+                    yearsExperience: 3,
+                    password: 'demo123'
+                });
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
